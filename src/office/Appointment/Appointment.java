@@ -64,10 +64,15 @@ public class Appointment {
     }
 
     public void displayAppointment() {
-        System.out.println("Patient:");
+        System.out.print("Patient:");
         patient.displayPatient();
-        System.out.println("Doctor:\n" + doctor.getLastName());
+        System.out.println("Doctor: " + doctor.getLastName() + " " + doctor.getFirstName());
         System.out.println("Date: " + timeOfAppointment.getDayOfMonth() + " " + timeOfAppointment.getMonth() + " " + timeOfAppointment.getYear());
+        if (status)
+            System.out.println("Status: attended" );
+        else
+            System.out.println("Status: waiting");
+
 
     }
 }

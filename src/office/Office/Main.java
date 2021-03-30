@@ -17,6 +17,7 @@ public class Main {
         System.out.println("Hi, let's manage together my clinic!");
         System.out.println("We start from scratch...");
         System.out.println("Here are some commands you can use in order to lead this clinic well, I'll do the rest of the work.");
+        System.out.println("0. Exit");
         System.out.println("1. Hire a doctor");
         System.out.println("2. Edit doctor");
         System.out.println("3. Fire a doctor");
@@ -53,10 +54,18 @@ public class Main {
                 Service.editPatient();
             else if (opt == 7)
                 Service.deletePatient();
+            else if (opt == 8)
+                Service.displayPatients();
             else if (opt == 9)
                 Service.makeAppointment();
+            else if (opt == 10)
+                Service.goToAppointment();
+            else if (opt == 11)
+                Service.editAppointment();
             else if (opt == 12)
                 Service.deleteAppointment();
+            else if (opt == 13)
+                Service.displayAppointments();
             System.out.print("Command:");
             opt = scanner.nextInt();
         }

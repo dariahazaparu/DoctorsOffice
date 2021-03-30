@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Service {
     static ArrayList<Patient> patients = new ArrayList<>();
@@ -223,10 +224,12 @@ public class Service {
         System.out.print("Doctor ID for deletion:");
         int id = scanner.nextInt();
         Doctor doctor = findDoctor(id);
-        if (doctor == null)
-            System.out.println("Invalid ID.");
-        else
-            doctors.remove(doctor);
+        if (doctor == null) {
+            System.out.println("Invalid doctor ID.");
+            return;
+        }
+
+        doctors.remove(doctor);
     }
 
     public static void deletePatient() {
@@ -235,12 +238,12 @@ public class Service {
         System.out.print("Patient ID for deletion:");
         int id = scanner.nextInt();
         Patient patient = findPatient(id);
-        if (patient == null)
-            System.out.println("Invalid ID.");
-        else
-            patients.remove(patient);
+        if (patient == null) {
+            System.out.println("Invalid patient ID.");
+            return;
+        }
+        patients.remove(patient);
     }
-
 
     public static void deleteAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
@@ -248,10 +251,11 @@ public class Service {
         System.out.print("Appointment ID for deletion:");
         int id = scanner.nextInt();
         Appointment app = findAppointment(id);
-        if (app == null)
-            System.out.println("Invalid ID.");
-        else
-            appointments.remove(app);
+        if (app == null) {
+            System.out.println("Invalid appointment ID.");
+            return;
+        }
+        appointments.remove(app);
     }
 
     public static void displayDoctors() {
@@ -260,12 +264,28 @@ public class Service {
             i.displayDoctor();
     }
 
+    public static void displayPatients () {
+        System.out.println("These are the patients registered here:");
+        for (var i: patients)
+            i.displayPatient();
+    }
+
+    public static void displayAppointments(){
+        System.out.println("These are all appointments made at this clinic: ");
+        for (var i :appointments)
+            i.displayAppointment();
+    }
+
     public static void editDoctor() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Doctor ID for editing:");
         int id = scanner.nextInt();
         Doctor doctor = findDoctor(id);
+        if (doctor == null) {
+            System.out.println("Invalid doctor ID.");
+            return;
+        }
         System.out.println("Old doctor's data");
         doctor.show();
 
@@ -300,6 +320,9 @@ public class Service {
             int hire = scanner.nextInt();
             doctor.setHireYear(hire);
             System.out.println("New salary: " + doctor.computeSalary());
+        } else {
+            System.out.println("Invalid option. Abort editing.");
+            return;
         }
 //        else if (opt == 5) {
 //            if (doctor.getClass().toString().equals("class office.doctor.FamilyDoctor")) {
@@ -317,6 +340,10 @@ public class Service {
         System.out.print("Patient ID for editing:");
         int id = scanner.nextInt();
         Patient patient = findPatient(id);
+        if (patient == null) {
+            System.out.println("Invalid patient ID.");
+            return;
+        }
         System.out.println("Old patient's data");
         patient.show();
 
@@ -347,7 +374,75 @@ public class Service {
             System.out.print("New phone number: ");
             String tel = scanner.next();
             patient.setTel(tel);
+        } else {
+            System.out.println("Invalid option. Abort editing.");
+            return;
         }
         System.out.println("Successfully edited.");
+    }
+
+    public static void editAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Appointment ID for editing:");
+        int id = scanner.nextInt();
+        Appointment app = findAppointment(id);
+        if (app == null) {
+            System.out.println("Invalid appointment ID.");
+            return;
+        }
+        System.out.println("Old doctor's data");
+        app.displayAppointment();
+
+        System.out.println("What do you want to edit?");
+        System.out.println("1. Patient");
+        System.out.println("2. Doctor");
+        System.out.println("3. Date");
+        System.out.println("4. Status");
+
+        int opt = scanner.nextInt();
+        if(opt == 1) {
+            System.out.print("New patient id: ");
+            int pid = scanner.nextInt();
+            Patient patient = findPatient(pid);
+            app.setPatient(patient);
+        } else if (opt == 2) {
+            System.out.print("New doctor id: ");
+            int pid = scanner.nextInt();
+            Doctor doctor = findDoctor(pid);
+            app.setDoctor(doctor);
+        } else if (opt == 3) {
+            System.out.print("New date: ");
+            String data = scanner.next();
+            int day = Integer.parseInt(data.substring(0,2));
+            int month = Integer.parseInt(data.substring(3, 5));
+            int year = Integer.parseInt(data.substring(6, 10));
+            int hour = Integer.parseInt(data.substring(12, 14));
+            int minute = Integer.parseInt(data.substring(15, 17));
+            LocalDateTime timeOfApp = LocalDateTime.of(year, month, day, hour, minute);
+            app.setTimeOfAppointment(timeOfApp);
+        } else if (opt == 4) {
+            System.out.print("New status (0/1): ");
+            boolean status = scanner.nextBoolean();
+            app.setStatus(status);
+        } else {
+            System.out.println("Invalid option. Abort editing.");
+            return;
+        }
+        System.out.println("Successfully edited.");
+    }
+
+    public static void goToAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.println("Appointment ID attended:");
+        int id = scanner.nextInt();
+        Appointment app = findAppointment(id);
+        if (app == null) {
+            System.out.println("Invalid appointment ID.");
+            return;
+        }
+        app.setStatus(!app.isStatus());
+        System.out.println("Appointment attended.");
     }
 }
