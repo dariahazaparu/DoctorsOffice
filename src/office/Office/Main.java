@@ -1,5 +1,6 @@
 package office.Office;
 
+import office.Appointment.Appointment;
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
@@ -7,6 +8,8 @@ import office.doctor.Pediatrician;
 import office.pacient.Adult;
 import office.pacient.Child;
 import office.pacient.Patient;
+
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,6 +26,9 @@ public class Main {
 
         p1.displayPatient();
         p2.displayPatient();
+
+        Appointment a1 = new Appointment(p1, d1, LocalDateTime.now());
+        a1.displayAppointment();
 
     }
 }
