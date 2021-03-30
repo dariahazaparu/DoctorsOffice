@@ -30,4 +30,9 @@ public class FamilyDoctor extends Doctor {
         System.out.println("\tDoctor " + lastName + " " + firstName + " (" + email + "), has been working here since "
                 + hireYear + " as a family doctor.");
     }
+
+    public void show() {
+        super.show();
+        System.out.println("\tNumber of families: " + noOfFamilies);
+    }
 }

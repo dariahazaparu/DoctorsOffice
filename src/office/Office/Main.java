@@ -41,12 +41,16 @@ public class Main {
         while (opt != 0) {
             if (opt == 1)
                 Service.addDoctor();
+            else if (opt == 2)
+                Service.editDoctor();
             else if (opt == 3)
                 Service.deleteDoctor();
             else if (opt == 4)
                 Service.displayDoctors();
             else if (opt == 5)
                 Service.addPatient();
+            else if (opt == 6)
+                Service.editPatient();
             else if (opt == 7)
                 Service.deletePatient();
             else if (opt == 9)

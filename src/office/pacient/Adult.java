@@ -13,4 +13,9 @@ public class Adult extends Patient{
     public void displayPatient() {
         System.out.println("Name: " + lastName + " " + firstName + " -> Insurance: " + healthInsurance);
     }
+
+    public void show() {
+        super.show();
+        System.out.println("Health Insurance: " + healthInsurance);
+    }
 }

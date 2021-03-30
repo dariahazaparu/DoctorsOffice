@@ -13,4 +13,9 @@ public class Child extends Patient {
     public void displayPatient() {
         System.out.println("Name: " + lastName + " " + firstName + " -> Parent name: " + parentName);
     }
+
+    public void show() {
+        super.show();
+        System.out.println("Parent name: " + parentName);
+    }
 }

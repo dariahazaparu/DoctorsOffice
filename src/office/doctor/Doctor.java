@@ -58,4 +58,11 @@ public abstract class Doctor {
     public abstract int computeSalary();
 
     public abstract void displayDoctor();
+
+    public void show() {
+        System.out.println("\tLast name: " + lastName);
+        System.out.println("\tFirst name: " + firstName);
+        System.out.println("\tEmail: " + email);
+        System.out.println("\tHire year: " + hireYear);
+    }
 }

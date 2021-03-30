@@ -156,6 +156,14 @@ public class Service {
         return found;
     }
 
+    public static Appointment findAppointment (int id) {
+        Appointment found = null;
+        for (var i: appointments)
+            if(i.getID() == id)
+                found = i;
+        return found;
+    }
+
     public static void makeAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
@@ -214,10 +222,7 @@ public class Service {
 
         System.out.print("Doctor ID for deletion:");
         int id = scanner.nextInt();
-        Doctor doctor = null;
-        for (var i :doctors)
-            if (i.getID() == id)
-                doctor = i;
+        Doctor doctor = findDoctor(id);
         if (doctor == null)
             System.out.println("Invalid ID.");
         else
@@ -229,10 +234,7 @@ public class Service {
 
         System.out.print("Patient ID for deletion:");
         int id = scanner.nextInt();
-        Patient patient = null;
-        for (var i :patients)
-            if (i.getID() == id)
-                patient = i;
+        Patient patient = findPatient(id);
         if (patient == null)
             System.out.println("Invalid ID.");
         else
@@ -245,10 +247,7 @@ public class Service {
 
         System.out.print("Appointment ID for deletion:");
         int id = scanner.nextInt();
-        Appointment app = null;
-        for (var i :appointments)
-            if (i.getID() == id)
-                app = i;
+        Appointment app = findAppointment(id);
         if (app == null)
             System.out.println("Invalid ID.");
         else
@@ -259,5 +258,96 @@ public class Service {
         System.out.println("These are the doctors who work here:");
         for (var i: doctors)
             i.displayDoctor();
+    }
+
+    public static void editDoctor() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Doctor ID for editing:");
+        int id = scanner.nextInt();
+        Doctor doctor = findDoctor(id);
+        System.out.println("Old doctor's data");
+        doctor.show();
+
+        System.out.println("What do you want to edit?");
+        System.out.println("1. Last name");
+        System.out.println("2. First name");
+        System.out.println("3. Email");
+        System.out.println("4. Hire year");
+//        if (doctor.getClass().toString().equals("class office.doctor.FamilyDoctor")) {
+//            System.out.println("5. Number of families");
+//        } else if (doctor.getClass().toString().equals("class office.doctor.Nurse")) {
+//            System.out.println("5. Working hours per week");
+//        } else if (doctor.getClass().toString().equals("class office.doctor.Pediatrician")) {
+//            System.out.println("5. Salary bonus");
+//        }
+
+        int opt = scanner.nextInt();
+        if(opt == 1) {
+            System.out.print("New last name: ");
+            String name = scanner.next();
+            doctor.setLastName(name);
+        } else if (opt == 2) {
+            System.out.print("New first name: ");
+            String name = scanner.next();
+            doctor.setFirstName(name);
+        } else if (opt == 3) {
+            System.out.print("New email: ");
+            String email = scanner.next();
+            doctor.setEmail(email);
+        } else if (opt == 4) {
+            System.out.print("New hire year: ");
+            int hire = scanner.nextInt();
+            doctor.setHireYear(hire);
+            System.out.println("New salary: " + doctor.computeSalary());
+        }
+//        else if (opt == 5) {
+//            if (doctor.getClass().toString().equals("class office.doctor.FamilyDoctor")) {
+//            } else if (doctor.getClass().toString().equals("class office.doctor.Nurse")) {
+//            } else if (doctor.getClass().toString().equals("class office.doctor.Pediatrician")) {
+//            }
+//        }
+        System.out.println("Successfully edited.");
+
+    }
+
+    public static void editPatient() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Patient ID for editing:");
+        int id = scanner.nextInt();
+        Patient patient = findPatient(id);
+        System.out.println("Old patient's data");
+        patient.show();
+
+        System.out.println("What do you want to edit?");
+        System.out.println("1. Last name");
+        System.out.println("2. First name");
+        System.out.println("3. Birth year");
+        System.out.println("4. CNP");
+        System.out.println("5. Phone number");
+        int opt = scanner.nextInt();
+        if(opt == 1) {
+            System.out.print("New last name: ");
+            String name = scanner.next();
+            patient.setLastName(name);
+        } else if (opt == 2) {
+            System.out.print("New first name: ");
+            String name = scanner.next();
+            patient.setFirstName(name);
+        } else if (opt == 3) {
+            System.out.print("New birth year: ");
+            int birth = scanner.nextInt();
+            patient.setBirthYear(birth);
+        } else if (opt == 4) {
+            System.out.print("New CNP: ");
+            String cnp = scanner.next();
+            patient.setCNP(cnp);
+        }  else if (opt == 5) {
+            System.out.print("New phone number: ");
+            String tel = scanner.next();
+            patient.setTel(tel);
+        }
+        System.out.println("Successfully edited.");
     }
 }

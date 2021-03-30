@@ -30,5 +30,10 @@ public class Nurse extends Doctor {
         System.out.println("\tDoctor " + lastName + " " + firstName + " (" + email + "), has been working here since "
                 + hireYear + " as a nurse.");
     }
+
+    public void show() {
+        super.show();
+        System.out.println("\tWorking hours per week: " + hours);
+    }
 }
 

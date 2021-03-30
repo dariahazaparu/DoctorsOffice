@@ -72,4 +72,12 @@ public abstract class Patient {
     }
 
     public abstract void displayPatient();
+
+    public void show() {
+        System.out.println("Last name: " + lastName);
+        System.out.println("First name: " + firstName);
+        System.out.println("Birth year: " + birthYear);
+        System.out.println("CNP: " + CNP);
+        System.out.println("Phone number: " + tel);
+    }
 }
