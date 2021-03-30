@@ -1,5 +1,7 @@
 package office.doctor;
 
+import java.time.LocalDateTime;
+
 public class FamilyDoctor extends Doctor {
 
     private int noOfFamilies;
@@ -19,6 +21,7 @@ public class FamilyDoctor extends Doctor {
 
     @Override
     public int computeSalary() {
-        return 1000 * (2021 - hireYear) + 5 * noOfFamilies;
+        LocalDateTime time = LocalDateTime.now();
+        return 1000 * (time.getYear() - hireYear) + 5 * noOfFamilies;
     }
 }

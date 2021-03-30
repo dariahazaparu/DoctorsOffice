@@ -4,6 +4,9 @@ import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
 import office.doctor.Pediatrician;
+import office.pacient.Adult;
+import office.pacient.Child;
+import office.pacient.Patient;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,5 +17,12 @@ public class Main {
         System.out.println(d1.computeSalary());
         System.out.println(d2.computeSalary());
         System.out.println(d3.computeSalary());
+
+        Patient p1 = new Adult("Nume", "Prenume", 1981, "CNP", "000 0000 000", true );
+        Patient p2 = new Child("Nume", "Prenume", 1981, "CNP", "000 0000 000", "Parinte" );
+
+        p1.displayPatient();
+        p2.displayPatient();
+
     }
 }
