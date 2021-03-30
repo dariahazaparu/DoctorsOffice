@@ -6,8 +6,8 @@ public class Nurse extends Doctor {
 
     private int hours;
 
-    public Nurse(String LastName, String FirstName, String Email, int BirthYear, int HireYear, int Hours) {
-        super(LastName, FirstName, Email, BirthYear, HireYear);
+    public Nurse(String LastName, String FirstName, String Email, int HireYear, int Hours) {
+        super(LastName, FirstName, Email, HireYear);
         hours = Hours;
     }
 

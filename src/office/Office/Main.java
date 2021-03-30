@@ -10,25 +10,33 @@ import office.pacient.Child;
 import office.pacient.Patient;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Main {
+    public static void Menu() {
+        System.out.println("Hi, let's manage together my clinic!");
+        System.out.println("We start from scratch...");
+        System.out.println("Here are some commands you can use in order to lead this clinic well, I'll do the rest of the work.");
+        System.out.println("1. Hire a doctor");
+        System.out.println("2. Register a patient");
+        System.out.println("3. Make an appointment");
+    }
+
     public static void main(String[] args) {
-        Doctor d1 = new Nurse("Nume", "Prenume", "email", 1980, 2011, 50);
-        Doctor d2 = new FamilyDoctor("Nume", "Prenume", "email", 1970, 2009, 212);
-        Doctor d3 = new Pediatrician("Nume", "Prenume", "email", 1972, 2009, 200);
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
-        System.out.println(d1.computeSalary());
-        System.out.println(d2.computeSalary());
-        System.out.println(d3.computeSalary());
-
-        Patient p1 = new Adult("Nume", "Prenume", 1981, "CNP", "000 0000 000", true );
-        Patient p2 = new Child("Nume", "Prenume", 1981, "CNP", "000 0000 000", "Parinte" );
-
-        p1.displayPatient();
-        p2.displayPatient();
-
-        Appointment a1 = new Appointment(p1, d1, LocalDateTime.now());
-        a1.displayAppointment();
-
+        Menu();
+        System.out.print("Command:");
+        int opt = scanner.nextInt();
+        while (opt != 0) {
+            if (opt == 1)
+                Service.addDoctor();
+            else if (opt == 2)
+                Service.addPatient();
+            else if (opt == 3)
+                Service.makeAppointment();
+            System.out.print("Command:");
+            opt = scanner.nextInt();
+        }
     }
 }

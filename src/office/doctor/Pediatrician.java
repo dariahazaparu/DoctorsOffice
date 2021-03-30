@@ -6,8 +6,8 @@ public class Pediatrician extends Doctor {
 
     private int bonus;
 
-    public Pediatrician(String LastName, String FirstName, String Email, int BirthYear, int HireYear, int Bonus) {
-        super(LastName, FirstName, Email, BirthYear, HireYear);
+    public Pediatrician(String LastName, String FirstName, String Email, int HireYear, int Bonus) {
+        super(LastName, FirstName, Email, HireYear);
         bonus = Bonus;
     }
 

@@ -5,7 +5,6 @@ public abstract class Doctor {
     protected String lastName;
     protected String firstName;
     protected String email;
-    protected int birthYear;
     protected int hireYear;
     static int increment = 0;
 
@@ -13,11 +12,10 @@ public abstract class Doctor {
         this.ID = ++increment;
     }
 
-    public Doctor(String LastName, String FirstName, String Email, int BirthYear, int HireYear) {
+    public Doctor(String LastName, String FirstName, String Email, int HireYear) {
         lastName = LastName;
         firstName = FirstName;
         email = Email;
-        birthYear = BirthYear;
         hireYear = HireYear;
     }
 
@@ -43,14 +41,6 @@ public abstract class Doctor {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
     }
 
     public int getHireYear() {

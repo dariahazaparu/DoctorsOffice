@@ -6,8 +6,8 @@ public class FamilyDoctor extends Doctor {
 
     private int noOfFamilies;
 
-    public FamilyDoctor(String LastName, String FirstName, String Email, int BirthYear, int HireYear, int NoOfFamilies) {
-        super(LastName, FirstName, Email, BirthYear, HireYear);
+    public FamilyDoctor(String LastName, String FirstName, String Email, int HireYear, int NoOfFamilies) {
+        super(LastName, FirstName, Email, HireYear);
         noOfFamilies = NoOfFamilies;
     }
 

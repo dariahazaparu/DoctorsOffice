@@ -7,15 +7,27 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 
 public class Appointment {
+    private int ID;
     private Patient patient;
     private Doctor doctor;
     private LocalDateTime timeOfAppointment;
+    private boolean status;
+    static int increment = 0;
+
+    {
+        this.ID = ++increment;
+    }
 
 
     public Appointment(Patient patient, Doctor doctor, LocalDateTime TimeOfAppointment) {
         this.patient = patient;
         this.doctor = doctor;
         timeOfAppointment = TimeOfAppointment;
+        status = false;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public Patient getPatient() {
@@ -40,6 +52,15 @@ public class Appointment {
 
     public void setTimeOfAppointment(LocalDateTime timeOfAppointment) {
         this.timeOfAppointment = timeOfAppointment;
+    }
+
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void displayAppointment() {
