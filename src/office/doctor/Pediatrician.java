@@ -24,4 +24,10 @@ public class Pediatrician extends Doctor {
         LocalDateTime time = LocalDateTime.now();
         return 1000 * (time.getYear() - hireYear) + bonus;
     }
+
+    @Override
+    public void displayDoctor() {
+        System.out.println("\tDoctor " + lastName + " " + firstName + " (" + email + "), has been working here since "
+                + hireYear + " as a pediatrician.");
+    }
 }

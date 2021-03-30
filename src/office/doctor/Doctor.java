@@ -56,4 +56,6 @@ public abstract class Doctor {
     }
 
     public abstract int computeSalary();
+
+    public abstract void displayDoctor();
 }

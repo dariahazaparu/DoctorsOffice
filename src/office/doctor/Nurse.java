@@ -24,5 +24,11 @@ public class Nurse extends Doctor {
         LocalDateTime time = LocalDateTime.now();
         return 1000 * (time.getYear() - hireYear) + 10 * hours;
     }
+
+    @Override
+    public void displayDoctor() {
+        System.out.println("\tDoctor " + lastName + " " + firstName + " (" + email + "), has been working here since "
+                + hireYear + " as a nurse.");
+    }
 }
 

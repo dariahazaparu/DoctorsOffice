@@ -209,4 +209,55 @@ public class Service {
         System.out.println("Appointment made successfully.");
     }
 
+    public static void deleteDoctor() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Doctor ID for deletion:");
+        int id = scanner.nextInt();
+        Doctor doctor = null;
+        for (var i :doctors)
+            if (i.getID() == id)
+                doctor = i;
+        if (doctor == null)
+            System.out.println("Invalid ID.");
+        else
+            doctors.remove(doctor);
+    }
+
+    public static void deletePatient() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Patient ID for deletion:");
+        int id = scanner.nextInt();
+        Patient patient = null;
+        for (var i :patients)
+            if (i.getID() == id)
+                patient = i;
+        if (patient == null)
+            System.out.println("Invalid ID.");
+        else
+            patients.remove(patient);
+    }
+
+
+    public static void deleteAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Appointment ID for deletion:");
+        int id = scanner.nextInt();
+        Appointment app = null;
+        for (var i :appointments)
+            if (i.getID() == id)
+                app = i;
+        if (app == null)
+            System.out.println("Invalid ID.");
+        else
+            appointments.remove(app);
+    }
+
+    public static void displayDoctors() {
+        System.out.println("These are the doctors who work here:");
+        for (var i: doctors)
+            i.displayDoctor();
+    }
 }
