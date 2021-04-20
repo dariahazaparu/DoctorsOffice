@@ -13,15 +13,26 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class Service {
-    static ArrayList<Patient> patients = new ArrayList<>();
-    static ArrayList<Doctor> doctors = new ArrayList<>();
-    static ArrayList<Appointment> appointments = new ArrayList<>();
+    public static Service serviceInstance = null;
+
+    private ArrayList<Patient> patients = new ArrayList<>();
+    private ArrayList<Doctor> doctors = new ArrayList<>();
+    private ArrayList<Appointment> appointments = new ArrayList<>();
 
 
-    public static void addDoctor() {
+    private Service() {}
+
+    public static Service getInstance() {
+        if (serviceInstance == null) {
+            serviceInstance = new Service();
+        }
+
+        return serviceInstance;
+    }
+
+    public void addDoctor() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.println("Doctor's personal data");
@@ -56,7 +67,7 @@ public class Service {
         System.out.println("Doctor added successfully.");
     }
 
-    public static void addPatient(){
+    public void addPatient(){
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.println("Patient's personal data");
@@ -94,7 +105,7 @@ public class Service {
         System.out.println("Patient successfully registered.");
     }
 
-    private static Patient searchParent(int id) {
+    private Patient searchParent(int id) {
         Patient sch = null;
         for(var i: patients)
             if (i.getID() == id && i.computeAge() >= 18)
@@ -102,7 +113,7 @@ public class Service {
         return sch;
     }
 
-    public static FamilyDoctor randomFamilyDoctor() {
+    public FamilyDoctor randomFamilyDoctor() {
         ArrayList<FamilyDoctor> fds = new ArrayList<>();
         for (var i: doctors) {
             if (i.getClass().toString().equals("class office.doctor.FamilyDoctor")){
@@ -115,7 +126,7 @@ public class Service {
         return fds.get(given);
     }
 
-    private static Pediatrician randomPediatrician() {
+    private Pediatrician randomPediatrician() {
         ArrayList<Pediatrician> fds = new ArrayList<>();
         for (var i: doctors) {
             if (i.getClass().toString().equals("class office.doctor.Pediatrician")){
@@ -128,7 +139,7 @@ public class Service {
         return fds.get(given);
     }
 
-    private static Nurse randomNurse() {
+    private Nurse randomNurse() {
         ArrayList<Nurse> fds = new ArrayList<>();
         for (var i: doctors) {
             if (i.getClass().toString().equals("class office.doctor.Nurse")){
@@ -141,7 +152,7 @@ public class Service {
         return fds.get(given);
     }
 
-    public static Patient findPatient(int id) {
+    public Patient findPatient(int id) {
         Patient found = null;
         for (var i: patients)
             if (i.getID() == id)
@@ -149,7 +160,7 @@ public class Service {
         return found;
     }
 
-    public static Doctor findDoctor (int id) {
+    public Doctor findDoctor (int id) {
         Doctor found = null;
         for (var i: doctors)
             if(i.getID() == id)
@@ -157,7 +168,7 @@ public class Service {
         return found;
     }
 
-    public static Appointment findAppointment (int id) {
+    public Appointment findAppointment (int id) {
         Appointment found = null;
         for (var i: appointments)
             if(i.getID() == id)
@@ -165,7 +176,7 @@ public class Service {
         return found;
     }
 
-    public static void makeAppointment() {
+    public void makeAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.println("Appointment data");
@@ -218,7 +229,7 @@ public class Service {
         System.out.println("Appointment made successfully.");
     }
 
-    public static void deleteDoctor() {
+    public void deleteDoctor() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Doctor ID for deletion:");
@@ -232,7 +243,7 @@ public class Service {
         doctors.remove(doctor);
     }
 
-    public static void deletePatient() {
+    public void deletePatient() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Patient ID for deletion:");
@@ -245,7 +256,7 @@ public class Service {
         patients.remove(patient);
     }
 
-    public static void deleteAppointment() {
+    public void deleteAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Appointment ID for deletion:");
@@ -258,25 +269,25 @@ public class Service {
         appointments.remove(app);
     }
 
-    public static void displayDoctors() {
+    public void displayDoctors() {
         System.out.println("These are the doctors who work here:");
         for (var i: doctors)
             i.displayDoctor();
     }
 
-    public static void displayPatients () {
+    public void displayPatients () {
         System.out.println("These are the patients registered here:");
         for (var i: patients)
             i.displayPatient();
     }
 
-    public static void displayAppointments(){
+    public void displayAppointments(){
         System.out.println("These are all appointments made at this clinic: ");
         for (var i :appointments)
             i.displayAppointment();
     }
 
-    public static void editDoctor() {
+    public void editDoctor() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Doctor ID for editing:");
@@ -334,7 +345,7 @@ public class Service {
 
     }
 
-    public static void editPatient() {
+    public void editPatient() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Patient ID for editing:");
@@ -381,7 +392,7 @@ public class Service {
         System.out.println("Successfully edited.");
     }
 
-    public static void editAppointment() {
+    public void editAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.print("Appointment ID for editing:");
@@ -432,7 +443,7 @@ public class Service {
         System.out.println("Successfully edited.");
     }
 
-    public static void goToAppointment() {
+    public void goToAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
         System.out.println("Appointment ID attended:");

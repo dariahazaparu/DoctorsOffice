@@ -1,15 +1,5 @@
 package office.Office;
 
-import office.Appointment.Appointment;
-import office.doctor.Doctor;
-import office.doctor.FamilyDoctor;
-import office.doctor.Nurse;
-import office.doctor.Pediatrician;
-import office.pacient.Adult;
-import office.pacient.Child;
-import office.pacient.Patient;
-
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
@@ -35,37 +25,40 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
-
+        Service service = Service.getInstance();
         Menu();
         System.out.print("Command:");
         int opt = scanner.nextInt();
         while (opt != 0) {
-            if (opt == 1)
-                Service.addDoctor();
-            else if (opt == 2)
-                Service.editDoctor();
-            else if (opt == 3)
-                Service.deleteDoctor();
-            else if (opt == 4)
-                Service.displayDoctors();
-            else if (opt == 5)
-                Service.addPatient();
-            else if (opt == 6)
-                Service.editPatient();
-            else if (opt == 7)
-                Service.deletePatient();
-            else if (opt == 8)
-                Service.displayPatients();
-            else if (opt == 9)
-                Service.makeAppointment();
-            else if (opt == 10)
-                Service.goToAppointment();
-            else if (opt == 11)
-                Service.editAppointment();
-            else if (opt == 12)
-                Service.deleteAppointment();
-            else if (opt == 13)
-                Service.displayAppointments();
+            switch (opt) {
+                case 1:
+                    service.addDoctor();
+                case 2:
+                    service.editDoctor();
+                case 3:
+                    service.deleteDoctor();
+                case 4:
+                    service.displayDoctors();
+                case 5:
+                    service.addPatient();
+                case 6:
+                    service.editPatient();
+                case 7:
+                    service.deletePatient();
+                case 8:
+                    service.displayPatients();
+                case 9:
+                    service.makeAppointment();
+                case 10:
+                    service.goToAppointment();
+                case 11:
+                    service.editAppointment();
+                case 12:
+                    service.deleteAppointment();
+                case 13:
+                    service.displayAppointments();
+            }
+
             System.out.print("Command:");
             opt = scanner.nextInt();
         }

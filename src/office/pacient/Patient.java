@@ -1,41 +1,19 @@
 package office.pacient;
+import office.Office.Person;
+
 import java.time.LocalDateTime;
 
-public abstract class Patient {
-    protected int ID;
-    protected String lastName;
-    protected String firstName;
+public abstract class Patient extends Person {
+
     protected int birthYear;
     protected String CNP;
     protected String tel;
-    static int increment = 0;
-
-    {
-        this.ID = ++increment;
-    }
 
     public Patient(String LastName, String FirstName, int BirthYear, String CNP, String Tel) {
-        lastName = LastName;
-        firstName = FirstName;
+        super(LastName, FirstName);
         birthYear = BirthYear;
         this.CNP = CNP;
         tel = Tel;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public int getBirthYear() {
