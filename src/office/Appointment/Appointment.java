@@ -1,9 +1,8 @@
 package office.Appointment;
 
 import office.doctor.Doctor;
-import office.pacient.Patient;
+import office.patient.Patient;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 public class Appointment {

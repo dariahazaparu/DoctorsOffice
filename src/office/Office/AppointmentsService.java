@@ -5,7 +5,7 @@ import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
 import office.doctor.Pediatrician;
-import office.pacient.Patient;
+import office.patient.Patient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

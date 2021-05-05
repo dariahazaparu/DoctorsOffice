@@ -1,9 +1,8 @@
 package office.Office;
 
-import office.doctor.Doctor;
-import office.pacient.Adult;
-import office.pacient.Child;
-import office.pacient.Patient;
+import office.patient.Adult;
+import office.patient.Child;
+import office.patient.Patient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

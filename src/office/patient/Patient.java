@@ -1,4 +1,4 @@
-package office.pacient;
+package office.patient;
 import office.Office.Person;
 
 import java.time.LocalDateTime;

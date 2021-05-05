@@ -1,4 +1,4 @@
-package office.pacient;
+package office.patient;
 
 public class Adult extends Patient{
 
