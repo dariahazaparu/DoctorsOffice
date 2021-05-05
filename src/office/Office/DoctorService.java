@@ -59,6 +59,10 @@ public class DoctorService {
         System.out.println("Doctor added successfully.");
     }
 
+    public void addDoctor(Doctor doctor) {
+        doctors.add(doctor);
+    }
+
     public FamilyDoctor randomFamilyDoctor() {
         ArrayList<FamilyDoctor> fds = new ArrayList<>();
         for (var i: doctors) {
@@ -111,6 +115,7 @@ public class DoctorService {
 
         doctors.remove(doctor);
     }
+
     public Doctor findDoctor (int id) {
         Doctor found = null;
         for (var i: doctors)
