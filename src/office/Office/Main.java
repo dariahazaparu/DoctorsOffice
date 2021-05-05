@@ -25,38 +25,40 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
-        Service service = Service.getInstance();
+        AppointmentsService appointments = AppointmentsService.getInstance();
+        DoctorService doctors = DoctorService.getInstance();
+        PatientService patients = PatientService.getInstance();
         Menu();
         System.out.print("Command:");
         int opt = scanner.nextInt();
         while (opt != 0) {
             switch (opt) {
                 case 1:
-                    service.addDoctor();
+                    doctors.addDoctor();
                 case 2:
-                    service.editDoctor();
+                    doctors.editDoctor();
                 case 3:
-                    service.deleteDoctor();
+                    doctors.deleteDoctor();
                 case 4:
-                    service.displayDoctors();
+                    doctors.displayDoctors();
                 case 5:
-                    service.addPatient();
+                    patients.addPatient();
                 case 6:
-                    service.editPatient();
+                    patients.editPatient();
                 case 7:
-                    service.deletePatient();
+                    patients.deletePatient();
                 case 8:
-                    service.displayPatients();
+                    patients.displayPatients();
                 case 9:
-                    service.makeAppointment();
+                    appointments.makeAppointment();
                 case 10:
-                    service.goToAppointment();
+                    appointments.goToAppointment();
                 case 11:
-                    service.editAppointment();
+                    appointments.editAppointment();
                 case 12:
-                    service.deleteAppointment();
+                    appointments.deleteAppointment();
                 case 13:
-                    service.displayAppointments();
+                    appointments.displayAppointments();
             }
 
             System.out.print("Command:");

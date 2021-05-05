@@ -1,0 +1,171 @@
+package office.Office;
+
+import office.Appointment.Appointment;
+import office.doctor.Doctor;
+import office.doctor.FamilyDoctor;
+import office.doctor.Nurse;
+import office.doctor.Pediatrician;
+import office.pacient.Patient;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AppointmentsService {
+    public static AppointmentsService serviceInstance = null;
+
+    private ArrayList<Appointment> appointments = new ArrayList<>();
+
+    private AppointmentsService() {}
+    public static AppointmentsService getInstance() {
+        if (serviceInstance == null) {
+            serviceInstance = new AppointmentsService();
+        }
+
+        return serviceInstance;
+    }
+
+    public Appointment findAppointment (int id) {
+        Appointment found = null;
+        for (var i: appointments)
+            if(i.getID() == id)
+                found = i;
+        return found;
+    }
+    public void makeAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        DoctorService doctors = DoctorService.getInstance();
+        PatientService patients = PatientService.getInstance();
+
+        System.out.println("Appointment data");
+        System.out.println("Patient's ID:");
+        int id = scanner.nextInt();
+        System.out.println("Does the patient need a consult(1), pediatric consult(2) or a session of questions(3)?");
+        byte consult = scanner.nextByte();
+        System.out.println("Date (dd-mm-yyyy--hh-mm): ");
+        String data = scanner.next();
+        int day = Integer.parseInt(data.substring(0,2));
+        int month = Integer.parseInt(data.substring(3, 5));
+        int year = Integer.parseInt(data.substring(6, 10));
+        int hour = Integer.parseInt(data.substring(12, 14));
+        int minute = Integer.parseInt(data.substring(15, 17));
+        LocalDateTime timeOfApp = LocalDateTime.of(year, month, day, hour, minute);
+
+        Patient patient = patients.findPatient(id);
+        if (consult == 1) {
+            FamilyDoctor familyDoctor = doctors.randomFamilyDoctor();
+            if (familyDoctor != null && patient != null) {
+                Appointment ap = new Appointment(patients.findPatient(id), familyDoctor, timeOfApp);
+                appointments.add(ap);
+            } else {
+                System.out.println("Appointment invalid.");
+                return;
+            }
+
+        } else if (consult == 2) {
+            Pediatrician pediatrician = doctors.randomPediatrician();
+            if (pediatrician != null && patient != null) {
+                Appointment ap = new Appointment(patient, pediatrician, timeOfApp);
+                appointments.add(ap);
+            } else{
+                System.out.println("Appointment invalid.");
+                return;
+            }
+        } else if (consult == 3) {
+            Nurse nurse = doctors.randomNurse();
+            if (nurse != null && patient != null) {
+                Appointment ap = new Appointment(patient, nurse, timeOfApp);
+                appointments.add(ap);
+            } else {
+                System.out.println("Appointment invalid.");
+                return;
+            }
+        } else {
+            System.out.println("Type of appointment invalid. Addition aborted.");
+            return;
+        }
+        System.out.println("Appointment made successfully.");
+    }
+    public void deleteAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Appointment ID for deletion:");
+        int id = scanner.nextInt();
+        Appointment app = findAppointment(id);
+        if (app == null) {
+            System.out.println("Invalid appointment ID.");
+            return;
+        }
+        appointments.remove(app);
+    }
+    public void displayAppointments(){
+        System.out.println("These are all appointments made at this clinic: ");
+        for (var i :appointments)
+            i.displayAppointment();
+    }
+    public void editAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        DoctorService doctors = DoctorService.getInstance();
+        PatientService patients = PatientService.getInstance();
+
+        System.out.print("Appointment ID for editing:");
+        int id = scanner.nextInt();
+        Appointment app = findAppointment(id);
+        if (app == null) {
+            System.out.println("Invalid appointment ID.");
+            return;
+        }
+        System.out.println("Old doctor's data");
+        app.displayAppointment();
+
+        System.out.println("What do you want to edit?");
+        System.out.println("1. Patient");
+        System.out.println("2. Doctor");
+        System.out.println("3. Date");
+        System.out.println("4. Status");
+
+        int opt = scanner.nextInt();
+        if(opt == 1) {
+            System.out.print("New patient id: ");
+            int pid = scanner.nextInt();
+            Patient patient = patients.findPatient(pid);
+            app.setPatient(patient);
+        } else if (opt == 2) {
+            System.out.print("New doctor id: ");
+            int pid = scanner.nextInt();
+            Doctor doctor = doctors.findDoctor(pid);
+            app.setDoctor(doctor);
+        } else if (opt == 3) {
+            System.out.print("New date: ");
+            String data = scanner.next();
+            int day = Integer.parseInt(data.substring(0,2));
+            int month = Integer.parseInt(data.substring(3, 5));
+            int year = Integer.parseInt(data.substring(6, 10));
+            int hour = Integer.parseInt(data.substring(12, 14));
+            int minute = Integer.parseInt(data.substring(15, 17));
+            LocalDateTime timeOfApp = LocalDateTime.of(year, month, day, hour, minute);
+            app.setTimeOfAppointment(timeOfApp);
+        } else if (opt == 4) {
+            System.out.print("New status (0/1): ");
+            boolean status = scanner.nextBoolean();
+            app.setStatus(status);
+        } else {
+            System.out.println("Invalid option. Abort editing.");
+            return;
+        }
+        System.out.println("Successfully edited.");
+    }
+    public void goToAppointment() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.println("Appointment ID attended:");
+        int id = scanner.nextInt();
+        Appointment app = findAppointment(id);
+        if (app == null) {
+            System.out.println("Invalid appointment ID.");
+            return;
+        }
+        app.setStatus(!app.isStatus());
+        System.out.println("Appointment attended.");
+    }
+}
