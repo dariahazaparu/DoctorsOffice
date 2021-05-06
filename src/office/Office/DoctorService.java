@@ -32,6 +32,9 @@ public class DoctorService {
         String lastname = scanner.next();
         System.out.print("\tFirst name: ");
         String firstname = scanner.next();
+
+        String name = lastname + " " + firstname;
+
         System.out.print("\tEmail: ");
         String email = scanner.next();
         System.out.print("\tHire year: ");
@@ -56,7 +59,8 @@ public class DoctorService {
         } else {
             System.out.println("Invalid type of doctor. Addition aborted.");
         }
-        System.out.println("Doctor added successfully.");
+
+        System.out.println("Doctor " + name + " successfully hired.");
     }
 
     public void addDoctor(Doctor doctor) {
@@ -112,7 +116,8 @@ public class DoctorService {
             System.out.println("Invalid doctor ID.");
             return;
         }
-
+        String name = doctor.getLastName() + " " + doctor.getFirstName();
+        System.out.println("Doctor " + name + " successfully deleted.");
         doctors.remove(doctor);
     }
 

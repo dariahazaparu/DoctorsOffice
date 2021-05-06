@@ -36,6 +36,7 @@ public class PatientService {
         System.out.print("\tCNP: ");
         String cnp = scanner.next();
 
+        String name;
         LocalDateTime time = LocalDateTime.now();
         if (time.getYear() - birth < 18) {
             System.out.print("\tParent ID:");
@@ -47,6 +48,7 @@ public class PatientService {
             }
             else {
                 Patient child = new Child(lastname, firstname, birth, cnp, parent.getTel(), parent.getLastName());
+                name = child.getLastName() + " " + child.getFirstName();
                 patients.add(child);
             }
         } else {
@@ -55,10 +57,11 @@ public class PatientService {
             System.out.print("\tDoes he/she have health insurance (0/1)?");
             byte hi = scanner.nextByte();
             Patient adult = new Adult(lastname, firstname, birth, cnp, tel, hi == 1);
+            name = adult.getLastName() + " " + adult.getFirstName();
             patients.add(adult);
         }
 
-        System.out.println("Patient successfully registered.");
+        System.out.println("Patient " + name + " successfully registered.");
     }
 
     public void addPatient(Patient patient){
@@ -91,6 +94,8 @@ public class PatientService {
             System.out.println("Invalid patient ID.");
             return;
         }
+        String name = patient.getLastName() + " " + patient.getFirstName();
+        System.out.println("Patient " + name + " successfully deleted.");
         patients.remove(patient);
     }
 
