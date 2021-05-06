@@ -192,4 +192,35 @@ public class DoctorService {
         System.out.println("Successfully edited.");
 
     }
+
+    public ArrayList<Nurse> getNurses() {
+        ArrayList<Nurse> nurses = new ArrayList<>();
+
+        for (var i: doctors)
+            if (i instanceof Nurse) {
+                nurses.add((Nurse) i);
+            }
+
+        return nurses;
+    }
+
+    public ArrayList<Pediatrician> getPediatricians() {
+        ArrayList<Pediatrician> peds = new ArrayList<>();
+
+        for (var i: doctors)
+            if (i instanceof Pediatrician)
+                peds.add((Pediatrician) i);
+
+            return peds;
+    }
+
+    public ArrayList<FamilyDoctor> getFamilyDoctors() {
+        ArrayList<FamilyDoctor> fam = new ArrayList<>();
+
+        for (var i: doctors)
+            if (i instanceof FamilyDoctor)
+                fam.add((FamilyDoctor) i);
+
+            return fam;
+    }
 }

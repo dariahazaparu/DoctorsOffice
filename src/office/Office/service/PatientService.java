@@ -152,4 +152,23 @@ public class PatientService {
             i.displayPatient();
     }
 
+    public ArrayList<Adult> getAdults() {
+        ArrayList<Adult> adults = new ArrayList<>();
+
+        for (var i: patients)
+            if (i instanceof Adult)
+                adults.add((Adult) i);
+
+        return adults;
+    }
+
+    public ArrayList<Child> getChidren() {
+        ArrayList<Child> children = new ArrayList<>();
+
+        for (var i: patients)
+            if (i instanceof Child)
+                children.add((Child) i);
+
+        return children;
+    }
 }

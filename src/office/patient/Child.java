@@ -9,6 +9,14 @@ public class Child extends Patient {
         parentName = ParentName;
     }
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     @Override
     public void displayPatient() {
         System.out.println("\t" + lastName + " " + firstName + " -> Parent name: " + parentName);

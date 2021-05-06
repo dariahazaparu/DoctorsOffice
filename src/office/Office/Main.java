@@ -95,5 +95,11 @@ public class Main {
             System.out.print("Command:");
             opt = scanner.nextInt();
         }
+
+        write.writeNurse();
+        write.writePediatrician();
+        write.writeFamilyDoctor();
+        write.writeAdult();
+        write.writeChild();
     }
 }

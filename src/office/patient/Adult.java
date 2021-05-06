@@ -9,6 +9,14 @@ public class Adult extends Patient{
         healthInsurance = HealthInsurance;
     }
 
+    public boolean isHealthInsurance() {
+        return healthInsurance;
+    }
+
+    public void setHealthInsurance(boolean healthInsurance) {
+        this.healthInsurance = healthInsurance;
+    }
+
     @Override
     public void displayPatient() {
         System.out.println("\t" + lastName + " " + firstName + " -> Insurance: " + healthInsurance);

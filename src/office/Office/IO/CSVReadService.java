@@ -38,7 +38,7 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Doctor nurse = new Nurse(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+            Nurse nurse = new Nurse(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
             doctorService.addDoctor(nurse);
         }
         csvReader.close();
@@ -50,7 +50,7 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Doctor peds = new Pediatrician(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+            Pediatrician peds = new Pediatrician(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
             doctorService.addDoctor(peds);
         }
         csvReader.close();
@@ -62,7 +62,7 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Doctor fam = new FamilyDoctor(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+            FamilyDoctor fam = new FamilyDoctor(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
             doctorService.addDoctor(fam);
         }
         csvReader.close();
@@ -74,7 +74,7 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Patient adult = new Adult(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
+            Adult adult = new Adult(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
             patientService.addPatient(adult);
         }
         csvReader.close();
@@ -86,7 +86,7 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Patient child = new Child(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], data[5]);
+            Child child = new Child(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], data[5]);
             patientService.addPatient(child);
         }
         csvReader.close();
