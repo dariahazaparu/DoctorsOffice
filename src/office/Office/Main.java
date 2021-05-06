@@ -2,6 +2,9 @@ package office.Office;
 
 import office.Office.IO.CSVReadService;
 import office.Office.IO.CSVWriteService;
+import office.Office.service.AppointmentsService;
+import office.Office.service.DoctorService;
+import office.Office.service.PatientService;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -41,6 +44,7 @@ public class Main {
         read.readPediatrician();
         read.readAdult();
         read.readChild();
+        read.readAppointment();
 
         Menu();
         System.out.print("Command:");

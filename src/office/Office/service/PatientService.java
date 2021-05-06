@@ -1,4 +1,4 @@
-package office.Office;
+package office.Office.service;
 
 import office.patient.Adult;
 import office.patient.Child;

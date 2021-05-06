@@ -53,7 +53,6 @@ public class Appointment {
         this.timeOfAppointment = timeOfAppointment;
     }
 
-
     public boolean isStatus() {
         return status;
     }
@@ -71,7 +70,7 @@ public class Appointment {
             System.out.println("Status: attended" );
         else
             System.out.println("Status: waiting");
-
+        System.out.println();
 
     }
 }

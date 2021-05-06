@@ -1,8 +1,10 @@
 // https://stackabuse.com/reading-and-writing-csvs-in-java/
 package office.Office.IO;
 
-import office.Office.DoctorService;
-import office.Office.PatientService;
+import office.Appointment.Appointment;
+import office.Office.service.AppointmentsService;
+import office.Office.service.DoctorService;
+import office.Office.service.PatientService;
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
@@ -11,9 +13,11 @@ import office.patient.Adult;
 import office.patient.Child;
 import office.patient.Patient;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class CSVReadService {
     public static CSVReadService serviceInstance = null;
@@ -70,7 +74,7 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Patient adult = new Adult(data[0], data[1], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
+            Patient adult = new Adult(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
             patientService.addPatient(adult);
         }
         csvReader.close();
@@ -82,9 +86,34 @@ public class CSVReadService {
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
-            Patient child = new Child(data[0], data[1], Integer.parseInt(data[2]), data[3], data[4], data[5]);
+            Patient child = new Child(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], data[5]);
             patientService.addPatient(child);
         }
         csvReader.close();
     }
+    public void readAppointment() throws IOException {
+        PatientService patientService = PatientService.getInstance();
+        DoctorService doctorService = DoctorService.getInstance();
+        AppointmentsService appointmentsService = AppointmentsService.getInstance();
+        BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/appointment.csv"));
+        String row;
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            Patient patient = patientService.findPatient(Integer.parseInt(data[0]));
+            Doctor doctor = doctorService.findDoctor(Integer.parseInt(data[1]));
+            int day = Integer.parseInt(data[2].substring(0,2));
+            int month = Integer.parseInt(data[2].substring(3, 5));
+            int year = Integer.parseInt(data[2].substring(6, 10));
+            int hour = Integer.parseInt(data[2].substring(12, 14));
+            int minute = Integer.parseInt(data[2].substring(15, 17));
+            LocalDateTime timeOfApp = LocalDateTime.of(year, month, day, hour, minute);
+            boolean status = Boolean.parseBoolean(data[3]);
+
+            Appointment app = new Appointment(patient, doctor, timeOfApp);
+            app.setStatus(status);
+            appointmentsService.makeAppointment(app);
+        }
+        csvReader.close();
+    }
+
 }

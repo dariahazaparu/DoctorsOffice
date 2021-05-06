@@ -1,4 +1,4 @@
-package office.Office;
+package office.Office.service;
 
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;

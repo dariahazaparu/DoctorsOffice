@@ -1,4 +1,4 @@
-package office.Office;
+package office.Office.service;
 
 import office.Appointment.Appointment;
 import office.doctor.Doctor;
@@ -16,7 +16,9 @@ public class AppointmentsService {
 
     private ArrayList<Appointment> appointments = new ArrayList<>();
 
-    private AppointmentsService() {}
+    private AppointmentsService() {
+    }
+
     public static AppointmentsService getInstance() {
         if (serviceInstance == null) {
             serviceInstance = new AppointmentsService();
@@ -25,13 +27,14 @@ public class AppointmentsService {
         return serviceInstance;
     }
 
-    public Appointment findAppointment (int id) {
+    public Appointment findAppointment(int id) {
         Appointment found = null;
-        for (var i: appointments)
-            if(i.getID() == id)
+        for (var i : appointments)
+            if (i.getID() == id)
                 found = i;
         return found;
     }
+
     public void makeAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         DoctorService doctors = DoctorService.getInstance();
@@ -44,7 +47,7 @@ public class AppointmentsService {
         byte consult = scanner.nextByte();
         System.out.println("Date (dd-mm-yyyy--hh-mm): ");
         String data = scanner.next();
-        int day = Integer.parseInt(data.substring(0,2));
+        int day = Integer.parseInt(data.substring(0, 2));
         int month = Integer.parseInt(data.substring(3, 5));
         int year = Integer.parseInt(data.substring(6, 10));
         int hour = Integer.parseInt(data.substring(12, 14));
@@ -67,7 +70,7 @@ public class AppointmentsService {
             if (pediatrician != null && patient != null) {
                 Appointment ap = new Appointment(patient, pediatrician, timeOfApp);
                 appointments.add(ap);
-            } else{
+            } else {
                 System.out.println("Appointment invalid.");
                 return;
             }
@@ -86,6 +89,11 @@ public class AppointmentsService {
         }
         System.out.println("Appointment made successfully.");
     }
+
+    public void makeAppointment(Appointment app) {
+        appointments.add(app);
+    }
+
     public void deleteAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
@@ -98,11 +106,13 @@ public class AppointmentsService {
         }
         appointments.remove(app);
     }
-    public void displayAppointments(){
+
+    public void displayAppointments() {
         System.out.println("These are all appointments made at this clinic: ");
-        for (var i :appointments)
+        for (var i : appointments)
             i.displayAppointment();
     }
+
     public void editAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         DoctorService doctors = DoctorService.getInstance();
@@ -125,7 +135,7 @@ public class AppointmentsService {
         System.out.println("4. Status");
 
         int opt = scanner.nextInt();
-        if(opt == 1) {
+        if (opt == 1) {
             System.out.print("New patient id: ");
             int pid = scanner.nextInt();
             Patient patient = patients.findPatient(pid);
@@ -138,7 +148,7 @@ public class AppointmentsService {
         } else if (opt == 3) {
             System.out.print("New date: ");
             String data = scanner.next();
-            int day = Integer.parseInt(data.substring(0,2));
+            int day = Integer.parseInt(data.substring(0, 2));
             int month = Integer.parseInt(data.substring(3, 5));
             int year = Integer.parseInt(data.substring(6, 10));
             int hour = Integer.parseInt(data.substring(12, 14));
@@ -155,6 +165,7 @@ public class AppointmentsService {
         }
         System.out.println("Successfully edited.");
     }
+
     public void goToAppointment() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
