@@ -2,10 +2,14 @@
 package office.Office.IO;
 
 import office.Office.DoctorService;
+import office.Office.PatientService;
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
 import office.doctor.Pediatrician;
+import office.patient.Adult;
+import office.patient.Child;
+import office.patient.Patient;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -56,6 +60,30 @@ public class CSVReadService {
             String[] data = row.split(",");
             Doctor fam = new FamilyDoctor(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
             doctorService.addDoctor(fam);
+        }
+        csvReader.close();
+    }
+
+    public void readAdult() throws IOException {
+        PatientService patientService = PatientService.getInstance();
+        BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/adult.csv"));
+        String row;
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            Patient adult = new Adult(data[0], data[1], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
+            patientService.addPatient(adult);
+        }
+        csvReader.close();
+    }
+
+    public void readChild() throws IOException {
+        PatientService patientService = PatientService.getInstance();
+        BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/child.csv"));
+        String row;
+        while ((row = csvReader.readLine()) != null) {
+            String[] data = row.split(",");
+            Patient child = new Child(data[0], data[1], Integer.parseInt(data[2]), data[3], data[4], data[5]);
+            patientService.addPatient(child);
         }
         csvReader.close();
     }

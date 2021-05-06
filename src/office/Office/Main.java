@@ -39,6 +39,8 @@ public class Main {
         read.readNurse();
         read.readFamilyDoctor();
         read.readPediatrician();
+        read.readAdult();
+        read.readChild();
 
         Menu();
         System.out.print("Command:");

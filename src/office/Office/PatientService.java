@@ -61,6 +61,10 @@ public class PatientService {
         System.out.println("Patient successfully registered.");
     }
 
+    public void addPatient(Patient patient){
+        patients.add(patient);
+    }
+
     private Patient searchParent(int id) {
         Patient sch = null;
         for(var i: patients)
