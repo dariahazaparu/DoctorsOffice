@@ -1,5 +1,6 @@
 package office.Office;
 
+import office.Appointment.Appointment;
 import office.Office.IO.CSVReadService;
 import office.Office.IO.CSVWriteService;
 import office.Office.service.AppointmentsService;
@@ -7,7 +8,9 @@ import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     public static void Menu() {
@@ -28,6 +31,8 @@ public class Main {
         System.out.println("11. Edit appointment");
         System.out.println("12. Cancel appointment");
         System.out.println("13. Display appointments");
+        System.out.println("14. Display appointments for a doctor");
+        System.out.println("15. Doctors next appointments");
     }
 
     public static void main(String[] args) {
@@ -49,6 +54,7 @@ public class Main {
         read.readAppointment();
 
         Menu();
+        int id;
         System.out.print("Command:");
         int opt = scanner.nextInt();
         while (opt != 0) {
@@ -57,10 +63,14 @@ public class Main {
                     doctors.addDoctor();
                     break;
                 case 2:
-                    doctors.editDoctor();
+                    System.out.print("Doctor ID for editing:");
+                    id = scanner.nextInt();
+                    doctors.editDoctor(id);
                     break;
                 case 3:
-                    doctors.deleteDoctor();
+                    System.out.print("Doctor ID for deletion:");
+                    id = scanner.nextInt();
+                    doctors.deleteDoctor(id);
                     break;
                 case 4:
                     doctors.displayDoctors();
@@ -69,10 +79,14 @@ public class Main {
                     patients.addPatient();
                     break;
                 case 6:
-                    patients.editPatient();
+                    System.out.print("Patient ID for editing:");
+                    id = scanner.nextInt();
+                    patients.editPatient(id);
                     break;
                 case 7:
-                    patients.deletePatient();
+                    System.out.print("Patient ID for deletion:");
+                    id = scanner.nextInt();
+                    patients.deletePatient(id);
                     break;
                 case 8:
                     patients.displayPatients();
@@ -84,27 +98,47 @@ public class Main {
                     appointments.goToAppointment();
                     break;
                 case 11:
-                    appointments.editAppointment();
+                    System.out.print("Appointment ID for editing:");
+                    id = scanner.nextInt();
+                    appointments.editAppointment(id);
                     break;
                 case 12:
-                    appointments.deleteAppointment();
+                    System.out.print("Appointment ID for deletion:");
+                    id = scanner.nextInt();
+                    appointments.deleteAppointment(id);
                     break;
                 case 13:
                     appointments.displayAppointments();
                     break;
-            }
+                case 14:
+                    System.out.print("Doctor ID:");
+                    id = scanner.nextInt();
+                    HashSet<Appointment> apps = appointments.getDoctorsAppointments(id);
+                    for (var app: apps) {
+                        app.displayAppointment();
+                    }
+                    break;
+                case 15:
+                    System.out.print("Doctor ID:");
+                    id = scanner.nextInt();
+                    Set<Appointment> Apps = appointments.getDoctorsNextAppointments(id);
+                    for (var app: Apps) {
+                        app.displayAppointment();
+                    }
+                    break;
 
+            }
 
             System.out.print("Command:");
             opt = scanner.nextInt();
         }
 
-//        write.writeNurse();
-//        write.writePediatrician();
-//        write.writeFamilyDoctor();
-//        write.writeAdult();
-//        write.writeChild();
-//        write.writeAppointment();
+        write.writeNurse();
+        write.writePediatrician();
+        write.writeFamilyDoctor();
+        write.writeAdult();
+        write.writeChild();
+        write.writeAppointment();
         audit.close();
     }
 }

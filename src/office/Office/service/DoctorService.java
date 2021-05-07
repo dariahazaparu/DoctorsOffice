@@ -110,11 +110,8 @@ public class DoctorService {
         return fds.get(given);
     }
 
-    public void deleteDoctor() {
-        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+    public void deleteDoctor(int id) {
 
-        System.out.print("Doctor ID for deletion:");
-        int id = scanner.nextInt();
         Doctor doctor = findDoctor(id);
         if (doctor == null) {
             System.out.println("Invalid doctor ID.");
@@ -145,11 +142,9 @@ public class DoctorService {
         audit.print("display doctor");
     }
 
-    public void editDoctor() {
+    public void editDoctor(int id) {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
 
-        System.out.print("Doctor ID for editing:");
-        int id = scanner.nextInt();
         Doctor doctor = findDoctor(id);
         if (doctor == null) {
             System.out.println("Invalid doctor ID.");

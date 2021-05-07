@@ -48,8 +48,8 @@ public class CSVReadService {
             System.out.println("Failed to read nurses from CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV read nurses");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV read nurses");
     }
 
     public void readPediatrician() {
@@ -67,8 +67,8 @@ public class CSVReadService {
             System.out.println("Failed to read pediatricians from CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV read pediatricians");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV read pediatricians");
     }
 
     public void readFamilyDoctor() {
@@ -87,8 +87,8 @@ public class CSVReadService {
             System.out.println("Failed to read family doctors from CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV read family doctors");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV read family doctors");
     }
 
     public void readAdult() {
@@ -107,8 +107,8 @@ public class CSVReadService {
             System.out.println("Failed to read adults from CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV read adults");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV read adults");
     }
 
     public void readChild() {
@@ -127,8 +127,8 @@ public class CSVReadService {
             System.out.println("Failed to read children from CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV read children");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV read children");
     }
     public void readAppointment() {
         PatientService patientService = PatientService.getInstance();
@@ -152,6 +152,7 @@ public class CSVReadService {
 
                 Appointment app = new Appointment(patient, doctor, timeOfApp);
                 app.setStatus(status);
+                appointmentsService.addDoctorsAppointment(app, doctor);
                 appointmentsService.makeAppointment(app);
             }
             csvReader.close();
@@ -159,8 +160,8 @@ public class CSVReadService {
             System.out.println("Failed to read appointments from CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV read appointments");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV read appointments");
     }
 
 }

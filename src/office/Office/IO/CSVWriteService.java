@@ -44,8 +44,8 @@ public class CSVWriteService {
             System.out.println("Failed to write nurses into CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV write nurses");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV write nurses");
     }
 
     public void writePediatrician() {
@@ -63,8 +63,8 @@ public class CSVWriteService {
             System.out.println("Failed to write pediatricians into CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV write pediatricians");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV write pediatricians");
     }
 
     public void writeFamilyDoctor() {
@@ -82,8 +82,8 @@ public class CSVWriteService {
             System.out.println("Failed to write family doctors into CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV write family doctors");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV write family doctors");
     }
 
     public void writeAdult() {
@@ -102,8 +102,8 @@ public class CSVWriteService {
             System.out.println("Failed to write adults into CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV write adults");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV write adults");
     }
 
     public void writeChild() {
@@ -122,8 +122,8 @@ public class CSVWriteService {
             System.out.println("Failed to write children into CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV write children");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV write children");
     }
 
     public void writeAppointment() {
@@ -146,7 +146,7 @@ public class CSVWriteService {
             System.out.println("Failed to write appointments into CSV file.");
         }
 
-        AuditService audit = AuditService.getInstance();
-        audit.print("CSV write appointments");
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("CSV write appointments");
     }
 }

@@ -8,13 +8,14 @@ import office.doctor.Pediatrician;
 import office.patient.Patient;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AppointmentsService {
     public static AppointmentsService serviceInstance = null;
 
-    private ArrayList<Appointment> appointments = new ArrayList<>();
+    private final ArrayList<Appointment> appointments = new ArrayList<>();
+    private final HashMap<Doctor, HashSet<Appointment>> doctorApp = new HashMap<>();
 
     private AppointmentsService() {
     }
@@ -60,6 +61,7 @@ public class AppointmentsService {
             if (familyDoctor != null && patient != null) {
                 Appointment ap = new Appointment(patients.findPatient(id), familyDoctor, timeOfApp);
                 appointments.add(ap);
+                doctorApp.get(familyDoctor).add(ap);
             } else {
                 System.out.println("Appointment invalid.");
                 return;
@@ -70,6 +72,7 @@ public class AppointmentsService {
             if (pediatrician != null && patient != null) {
                 Appointment ap = new Appointment(patient, pediatrician, timeOfApp);
                 appointments.add(ap);
+                doctorApp.get(pediatrician).add(ap);
             } else {
                 System.out.println("Appointment invalid.");
                 return;
@@ -79,6 +82,7 @@ public class AppointmentsService {
             if (nurse != null && patient != null) {
                 Appointment ap = new Appointment(patient, nurse, timeOfApp);
                 appointments.add(ap);
+                doctorApp.get(nurse).add(ap);
             } else {
                 System.out.println("Appointment invalid.");
                 return;
@@ -98,11 +102,8 @@ public class AppointmentsService {
         appointments.add(app);
     }
 
-    public void deleteAppointment() {
-        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+    public void deleteAppointment(int id) {
 
-        System.out.print("Appointment ID for deletion:");
-        int id = scanner.nextInt();
         Appointment app = findAppointment(id);
         if (app == null) {
             System.out.println("Invalid appointment ID.");
@@ -123,13 +124,11 @@ public class AppointmentsService {
         audit.print("display appointments");
     }
 
-    public void editAppointment() {
+    public void editAppointment(int id) {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         DoctorService doctors = DoctorService.getInstance();
         PatientService patients = PatientService.getInstance();
 
-        System.out.print("Appointment ID for editing:");
-        int id = scanner.nextInt();
         Appointment app = findAppointment(id);
         if (app == null) {
             System.out.println("Invalid appointment ID.");
@@ -198,5 +197,45 @@ public class AppointmentsService {
 
     public ArrayList<Appointment> getAppointments() {
         return appointments;
+    }
+
+    public void addDoctorsAppointment(Appointment app, Doctor doctor) {
+
+        if (doctorApp.containsKey(doctor)) {
+            doctorApp.get(doctor).add(app);
+        } else {
+            HashSet<Appointment> apps = new HashSet<>();
+            apps.add(app);
+            doctorApp.put(doctor, apps);
+        }
+
+    }
+
+    public HashSet<Appointment> getDoctorsAppointments(int id){
+        DoctorService doctorService = DoctorService.getInstance();
+        Doctor doctor = doctorService.findDoctor(id);
+        if (doctor == null) {
+            System.out.println("Invalid doctor ID.");
+            return null;
+        }
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("get doctors appointments");
+
+        return doctorApp.get(doctor);
+    }
+
+    public Set<Appointment> getDoctorsNextAppointments(int id) {
+        DoctorService doctorService = DoctorService.getInstance();
+        Doctor doctor = doctorService.findDoctor(id);
+        if (doctor == null) {
+            System.out.println("Invalid doctor ID.");
+            return null;
+        }
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("get doctors next appointments");
+
+        return doctorApp.get(doctor).stream().filter(a -> !a.isStatus()).collect(Collectors.toSet());
     }
 }
