@@ -33,6 +33,9 @@ public class Main {
         System.out.println("13. Display appointments");
         System.out.println("14. Display appointments for a doctor");
         System.out.println("15. Doctors next appointments");
+        System.out.println("16. Sort patients by last name and display");
+        System.out.println("17. Sort doctors by hire year and display");
+        System.out.println("18. Sort doctors by salary and display");
     }
 
     public static void main(String[] args) {
@@ -126,6 +129,17 @@ public class Main {
                         app.displayAppointment();
                     }
                     break;
+                case 16:
+                    patients.sortByName();
+                    patients.displayPatients();
+                    break;
+                case 17:
+                    doctors.sortByHireYear();
+                    doctors.displayDoctors();
+                    break;
+                case 18:
+                    doctors.sortBySalary();
+                    doctors.displayDoctors();
 
             }
 

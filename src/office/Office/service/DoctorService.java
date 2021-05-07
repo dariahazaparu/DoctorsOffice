@@ -7,6 +7,7 @@ import office.doctor.Pediatrician;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -230,5 +231,32 @@ public class DoctorService {
                 fam.add((FamilyDoctor) i);
 
             return fam;
+    }
+
+    public void sortByHireYear(){
+
+        Comparator<? super Doctor> byHireYear = new Comparator<>() {
+            @Override
+            public int compare(Doctor o1, Doctor o2) {
+                return o1.getHireYear() - o2.getHireYear();
+            }
+        };
+        doctors.sort(byHireYear);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("sort doctors by hire year");
+    }
+
+    public void sortBySalary() {
+        Comparator<? super Doctor> bySalary = new Comparator<>() {
+            @Override
+            public int compare(Doctor o1, Doctor o2) {
+                return o1.computeSalary() - o2.computeSalary();
+            }
+        };
+        doctors.sort(bySalary);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("sort doctors by salary");
     }
 }

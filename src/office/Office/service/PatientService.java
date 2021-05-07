@@ -1,11 +1,13 @@
 package office.Office.service;
 
+import office.Office.Person;
 import office.patient.Adult;
 import office.patient.Child;
 import office.patient.Patient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class PatientService {
@@ -177,5 +179,19 @@ public class PatientService {
                 children.add((Child) i);
 
         return children;
+    }
+
+    public void sortByName() {
+
+        Comparator<? super Patient> byLastName = new Comparator<>() {
+            @Override
+            public int compare(Patient o1, Patient o2) {
+                return o1.getLastName().compareTo(o2.getLastName());
+            }
+        };
+        patients.sort(byLastName);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("sort patients by last name");
     }
 }
