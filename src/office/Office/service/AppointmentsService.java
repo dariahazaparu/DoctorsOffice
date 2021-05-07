@@ -88,6 +88,10 @@ public class AppointmentsService {
             return;
         }
         System.out.println("Appointment made successfully.");
+
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("make appointment");
     }
 
     public void makeAppointment(Appointment app) {
@@ -105,12 +109,18 @@ public class AppointmentsService {
             return;
         }
         appointments.remove(app);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("cancel appointment");
     }
 
     public void displayAppointments() {
         System.out.println("These are all appointments made at this clinic: ");
         for (var i : appointments)
             i.displayAppointment();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("display appointments");
     }
 
     public void editAppointment() {
@@ -164,6 +174,9 @@ public class AppointmentsService {
             return;
         }
         System.out.println("Successfully edited.");
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("edit appointment");
     }
 
     public void goToAppointment() {
@@ -178,5 +191,8 @@ public class AppointmentsService {
         }
         app.setStatus(!app.isStatus());
         System.out.println("Appointment attended.");
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("attend appointment");
     }
 }

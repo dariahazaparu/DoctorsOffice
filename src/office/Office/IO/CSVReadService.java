@@ -3,6 +3,7 @@ package office.Office.IO;
 
 import office.Appointment.Appointment;
 import office.Office.service.AppointmentsService;
+import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
 import office.doctor.Doctor;
@@ -42,6 +43,9 @@ public class CSVReadService {
             doctorService.addDoctor(nurse);
         }
         csvReader.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV read nurses");
     }
 
     public void readPediatrician() throws IOException {
@@ -54,6 +58,9 @@ public class CSVReadService {
             doctorService.addDoctor(peds);
         }
         csvReader.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV read pediatricians");
     }
 
     public void readFamilyDoctor() throws IOException {
@@ -66,6 +73,9 @@ public class CSVReadService {
             doctorService.addDoctor(fam);
         }
         csvReader.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV read family doctors");
     }
 
     public void readAdult() throws IOException {
@@ -78,6 +88,9 @@ public class CSVReadService {
             patientService.addPatient(adult);
         }
         csvReader.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV read adults");
     }
 
     public void readChild() throws IOException {
@@ -90,6 +103,9 @@ public class CSVReadService {
             patientService.addPatient(child);
         }
         csvReader.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV read children");
     }
     public void readAppointment() throws IOException {
         PatientService patientService = PatientService.getInstance();
@@ -114,6 +130,9 @@ public class CSVReadService {
             appointmentsService.makeAppointment(app);
         }
         csvReader.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV read appointments");
     }
 
 }

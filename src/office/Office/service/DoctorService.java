@@ -5,6 +5,7 @@ import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
 import office.doctor.Pediatrician;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -61,6 +62,9 @@ public class DoctorService {
         }
 
         System.out.println("Doctor " + name + " successfully hired.");
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("add doctor");
     }
 
     public void addDoctor(Doctor doctor) {
@@ -119,6 +123,9 @@ public class DoctorService {
         String name = doctor.getLastName() + " " + doctor.getFirstName();
         System.out.println("Doctor " + name + " successfully deleted.");
         doctors.remove(doctor);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("fire doctor");
     }
 
     public Doctor findDoctor (int id) {
@@ -133,6 +140,9 @@ public class DoctorService {
         System.out.println("These are the doctors who work here:");
         for (var i: doctors)
             i.displayDoctor();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("display doctor");
     }
 
     public void editDoctor() {
@@ -190,6 +200,9 @@ public class DoctorService {
 //            }
 //        }
         System.out.println("Successfully edited.");
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("edit doctor");
 
     }
 

@@ -62,6 +62,9 @@ public class PatientService {
         }
 
         System.out.println("Patient " + name + " successfully registered.");
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("add patient");
     }
 
     public void addPatient(Patient patient){
@@ -97,6 +100,9 @@ public class PatientService {
         String name = patient.getLastName() + " " + patient.getFirstName();
         System.out.println("Patient " + name + " successfully deleted.");
         patients.remove(patient);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("delete patient");
     }
 
     public void editPatient() {
@@ -144,12 +150,18 @@ public class PatientService {
             return;
         }
         System.out.println("Successfully edited.");
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("edit patient");
     }
 
     public void displayPatients () {
         System.out.println("These are the patients registered here:");
         for (var i: patients)
             i.displayPatient();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("display patients");
     }
 
     public ArrayList<Adult> getAdults() {

@@ -1,6 +1,7 @@
 // https://stackabuse.com/reading-and-writing-csvs-in-java/
 package office.Office.IO;
 
+import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
 import office.doctor.FamilyDoctor;
@@ -35,6 +36,9 @@ public class CSVWriteService {
         for (var nurse: nurses)
             csvWriter.write(nurse.getFirstName() + "," + nurse.getLastName() + "," + nurse.getEmail() + "," + nurse.getHireYear() + "," + nurse.getHours() + '\n');
         csvWriter.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV write nurses");
     }
 
     public void writePediatrician() throws IOException {
@@ -46,6 +50,9 @@ public class CSVWriteService {
         for (var ped: peds)
             csvWriter.write(ped.getFirstName() + "," + ped.getLastName() + "," + ped.getEmail() + "," + ped.getHireYear() + "," + ped.getBonus() + '\n');
         csvWriter.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV write pediatricians");
     }
 
     public void writeFamilyDoctor() throws IOException {
@@ -57,6 +64,9 @@ public class CSVWriteService {
         for (var doc: fam)
             csvWriter.write(doc.getFirstName() + "," + doc.getLastName() + "," + doc.getEmail() + "," + doc.getHireYear() + "," + doc.getNoOfFamilies() + '\n');
         csvWriter.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV write family doctors");
     }
 
     public void writeAdult() throws IOException {
@@ -69,6 +79,9 @@ public class CSVWriteService {
             csvWriter.write(adult.getFirstName() + "," + adult.getLastName() + "," + adult.getBirthYear()  + ","
                     + adult.getCNP() + "," + adult.getTel() + "," + adult.isHealthInsurance()  + '\n');
         csvWriter.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV write adults");
     }
 
     public void writeChild() throws IOException {
@@ -81,5 +94,8 @@ public class CSVWriteService {
             csvWriter.write(child.getFirstName() + "," + child.getLastName() + "," + child.getBirthYear()  + ","
                     + child.getCNP() + "," + child.getTel() + "," + child.getParentName() + '\n');
         csvWriter.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV write children");
     }
 }

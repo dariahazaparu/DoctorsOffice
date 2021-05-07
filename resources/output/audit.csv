@@ -1,0 +1,13 @@
+read nurses,7-MAY-2021 2:54:14
+CSV read nurses,7-MAY-2021 3:4:7
+CSV read family doctors,7-MAY-2021 3:4:7
+CSV read pediatricians,7-MAY-2021 3:4:7
+CSV read adults,7-MAY-2021 3:4:7
+CSV read children,7-MAY-2021 3:4:7
+CSV read appointments,7-MAY-2021 3:4:7
+edit doctor,7-MAY-2021 3:4:33
+CSV write nurses,7-MAY-2021 3:4:37
+CSV write pediatricians,7-MAY-2021 3:4:37
+CSV write family doctors,7-MAY-2021 3:4:37
+CSV write adults,7-MAY-2021 3:4:37
+CSV write children,7-MAY-2021 3:4:37

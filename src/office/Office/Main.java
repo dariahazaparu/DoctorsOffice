@@ -3,6 +3,7 @@ package office.Office;
 import office.Office.IO.CSVReadService;
 import office.Office.IO.CSVWriteService;
 import office.Office.service.AppointmentsService;
+import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
 
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class Main {
     public static void Menu() {
         System.out.println("Hi, let's manage together my clinic!");
-        System.out.println("It's full of doctors here. And a lot of patients registered.");
+        System.out.println("It's full of doctors here. And a lot of patients with appointments are registered.");
         System.out.println("Here are some commands you can use in order to lead this clinic well, I'll do the rest of the work.");
         System.out.println("0. Exit");
         System.out.println("1. Hire a doctor");
@@ -38,6 +39,8 @@ public class Main {
 
         CSVReadService read = CSVReadService.getInstance();
         CSVWriteService write = CSVWriteService.getInstance();
+
+        AuditService audit = AuditService.getInstance();
 
         read.readNurse();
         read.readFamilyDoctor();
@@ -92,6 +95,7 @@ public class Main {
                     break;
             }
 
+
             System.out.print("Command:");
             opt = scanner.nextInt();
         }
@@ -101,5 +105,6 @@ public class Main {
         write.writeFamilyDoctor();
         write.writeAdult();
         write.writeChild();
+        audit.close();
     }
 }
