@@ -11,3 +11,35 @@ CSV write pediatricians,7-MAY-2021 3:4:37
 CSV write family doctors,7-MAY-2021 3:4:37
 CSV write adults,7-MAY-2021 3:4:37
 CSV write children,7-MAY-2021 3:4:37
+CSV read nurses,7-MAY-2021 3:22:16
+CSV read family doctors,7-MAY-2021 3:22:16
+CSV read pediatricians,7-MAY-2021 3:22:16
+CSV read adults,7-MAY-2021 3:22:16
+CSV read children,7-MAY-2021 3:22:16
+CSV read appointments,7-MAY-2021 3:22:16
+CSV write nurses,7-MAY-2021 3:22:19
+CSV write pediatricians,7-MAY-2021 3:22:19
+CSV write family doctors,7-MAY-2021 3:22:19
+CSV write adults,7-MAY-2021 3:22:19
+CSV write children,7-MAY-2021 3:22:19
+CSV read nurses,7-MAY-2021 3:22:59
+CSV read family doctors,7-MAY-2021 3:22:59
+CSV read pediatricians,7-MAY-2021 3:22:59
+CSV read adults,7-MAY-2021 3:22:59
+CSV read children,7-MAY-2021 3:22:59
+CSV read appointments,7-MAY-2021 3:22:59
+CSV write children,7-MAY-2021 3:23:1
+CSV read nurses,7-MAY-2021 3:27:27
+CSV read family doctors,7-MAY-2021 3:27:27
+CSV read pediatricians,7-MAY-2021 3:27:27
+CSV read adults,7-MAY-2021 3:27:27
+CSV read children,7-MAY-2021 3:27:27
+CSV read appointments,7-MAY-2021 3:27:27
+CSV write appointments,7-MAY-2021 3:27:29
+CSV read nurses,7-MAY-2021 3:28:16
+CSV read family doctors,7-MAY-2021 3:28:17
+CSV read pediatricians,7-MAY-2021 3:28:17
+CSV read adults,7-MAY-2021 3:28:17
+CSV read children,7-MAY-2021 3:28:17
+CSV read appointments,7-MAY-2021 3:28:17
+CSV write appointments,7-MAY-2021 3:28:18

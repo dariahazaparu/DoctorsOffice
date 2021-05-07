@@ -195,4 +195,8 @@ public class AppointmentsService {
         AuditService audit = AuditService.getInstance();
         audit.print("attend appointment");
     }
+
+    public ArrayList<Appointment> getAppointments() {
+        return appointments;
+    }
 }

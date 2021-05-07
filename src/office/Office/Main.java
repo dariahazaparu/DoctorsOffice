@@ -100,11 +100,12 @@ public class Main {
             opt = scanner.nextInt();
         }
 
-        write.writeNurse();
-        write.writePediatrician();
-        write.writeFamilyDoctor();
-        write.writeAdult();
-        write.writeChild();
+//        write.writeNurse();
+//        write.writePediatrician();
+//        write.writeFamilyDoctor();
+//        write.writeAdult();
+//        write.writeChild();
+        write.writeAppointment();
         audit.close();
     }
 }

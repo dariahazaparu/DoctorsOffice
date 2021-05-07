@@ -1,6 +1,8 @@
 // https://stackabuse.com/reading-and-writing-csvs-in-java/
 package office.Office.IO;
 
+import office.Appointment.Appointment;
+import office.Office.service.AppointmentsService;
 import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
@@ -97,5 +99,24 @@ public class CSVWriteService {
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write children");
+    }
+
+    public void writeAppointment() throws IOException {
+        FileWriter csvWriter = new FileWriter("./resources/output/appointment.csv");
+        csvWriter.write("Patient,Doctor,Time of appointment,Status\n");
+        AppointmentsService appService = AppointmentsService.getInstance();
+        ArrayList<Appointment> apps = appService.getAppointments();
+
+        String status;
+        for (var app: apps) {
+            status = app.isStatus() ? "attended" : "waiting";
+            csvWriter.write(app.getPatient().getLastName() + " " + app.getPatient().getFirstName() + "," +
+                    app.getDoctor().getLastName() + " " + app.getDoctor().getFirstName() + "," +
+                    app.getTimeOfAppointment() + "," + status + '\n');
+        }
+        csvWriter.close();
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("CSV write appointments");
     }
 }
