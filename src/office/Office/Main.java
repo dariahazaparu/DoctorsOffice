@@ -7,7 +7,6 @@ import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -31,7 +30,7 @@ public class Main {
         System.out.println("13. Display appointments");
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         AppointmentsService appointments = AppointmentsService.getInstance();
         DoctorService doctors = DoctorService.getInstance();
@@ -105,7 +104,7 @@ public class Main {
 //        write.writeFamilyDoctor();
 //        write.writeAdult();
 //        write.writeChild();
-        write.writeAppointment();
+//        write.writeAppointment();
         audit.close();
     }
 }

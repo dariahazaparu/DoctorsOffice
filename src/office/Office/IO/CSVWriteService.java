@@ -29,92 +29,122 @@ public class CSVWriteService {
         return serviceInstance;
     }
 
-    public void writeNurse() throws IOException {
-        FileWriter csvWriter = new FileWriter("./resources/output/nurse.csv");
-        csvWriter.write("First name,Last name,Email,Hire year,Hours\n");
+    public void writeNurse() {
         DoctorService doctorService = DoctorService.getInstance();
-        ArrayList<Nurse> nurses = doctorService.getNurses();
 
-        for (var nurse: nurses)
-            csvWriter.write(nurse.getFirstName() + "," + nurse.getLastName() + "," + nurse.getEmail() + "," + nurse.getHireYear() + "," + nurse.getHours() + '\n');
-        csvWriter.close();
+        try {
+            FileWriter csvWriter = new FileWriter("./resources/output/nurse.csv");
+            csvWriter.write("First name,Last name,Email,Hire year,Hours\n");
+            ArrayList<Nurse> nurses = doctorService.getNurses();
+
+            for (var nurse: nurses)
+                csvWriter.write(nurse.getFirstName() + "," + nurse.getLastName() + "," + nurse.getEmail() + "," + nurse.getHireYear() + "," + nurse.getHours() + '\n');
+            csvWriter.close();
+        } catch (IOException err) {
+            System.out.println("Failed to write nurses into CSV file.");
+        }
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write nurses");
     }
 
-    public void writePediatrician() throws IOException {
-        FileWriter csvWriter = new FileWriter("./resources/output/pediatrician.csv");
-        csvWriter.write("First name,Last name,Email,Hire year,Bonus\n");
+    public void writePediatrician() {
         DoctorService doctorService = DoctorService.getInstance();
-        ArrayList<Pediatrician> peds = doctorService.getPediatricians();
 
-        for (var ped: peds)
-            csvWriter.write(ped.getFirstName() + "," + ped.getLastName() + "," + ped.getEmail() + "," + ped.getHireYear() + "," + ped.getBonus() + '\n');
-        csvWriter.close();
+        try {
+            FileWriter csvWriter = new FileWriter("./resources/output/pediatrician.csv");
+            csvWriter.write("First name,Last name,Email,Hire year,Bonus\n");
+            ArrayList<Pediatrician> peds = doctorService.getPediatricians();
+
+            for (var ped: peds)
+                csvWriter.write(ped.getFirstName() + "," + ped.getLastName() + "," + ped.getEmail() + "," + ped.getHireYear() + "," + ped.getBonus() + '\n');
+            csvWriter.close();
+        } catch (IOException err) {
+            System.out.println("Failed to write pediatricians into CSV file.");
+        }
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write pediatricians");
     }
 
-    public void writeFamilyDoctor() throws IOException {
-        FileWriter csvWriter = new FileWriter("./resources/output/familydoctor.csv");
-        csvWriter.write("First name,Last name,Email,Hire year,No of families\n");
+    public void writeFamilyDoctor() {
         DoctorService doctorService = DoctorService.getInstance();
-        ArrayList<FamilyDoctor> fam = doctorService.getFamilyDoctors();
 
-        for (var doc: fam)
-            csvWriter.write(doc.getFirstName() + "," + doc.getLastName() + "," + doc.getEmail() + "," + doc.getHireYear() + "," + doc.getNoOfFamilies() + '\n');
-        csvWriter.close();
+        try {
+            FileWriter csvWriter = new FileWriter("./resources/output/familydoctor.csv");
+            csvWriter.write("First name,Last name,Email,Hire year,No of families\n");
+            ArrayList<FamilyDoctor> fam = doctorService.getFamilyDoctors();
+
+            for (var doc: fam)
+                csvWriter.write(doc.getFirstName() + "," + doc.getLastName() + "," + doc.getEmail() + "," + doc.getHireYear() + "," + doc.getNoOfFamilies() + '\n');
+            csvWriter.close();
+        } catch (IOException err) {
+            System.out.println("Failed to write family doctors into CSV file.");
+        }
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write family doctors");
     }
 
-    public void writeAdult() throws IOException {
-        FileWriter csvWriter = new FileWriter("./resources/output/adult.csv");
-        csvWriter.write("First name,Last name,Birth year,CNP,Tel number,Health insurance\n");
+    public void writeAdult() {
         PatientService patientService = PatientService.getInstance();
-        ArrayList<Adult> adults = patientService.getAdults();
 
-        for (var adult: adults)
-            csvWriter.write(adult.getFirstName() + "," + adult.getLastName() + "," + adult.getBirthYear()  + ","
-                    + adult.getCNP() + "," + adult.getTel() + "," + adult.isHealthInsurance()  + '\n');
-        csvWriter.close();
+        try {
+            FileWriter csvWriter = new FileWriter("./resources/output/adult.csv");
+            csvWriter.write("First name,Last name,Birth year,CNP,Tel number,Health insurance\n");
+            ArrayList<Adult> adults = patientService.getAdults();
+
+            for (var adult: adults)
+                csvWriter.write(adult.getFirstName() + "," + adult.getLastName() + "," + adult.getBirthYear()  + ","
+                        + adult.getCNP() + "," + adult.getTel() + "," + adult.isHealthInsurance()  + '\n');
+            csvWriter.close();
+        } catch (IOException err) {
+            System.out.println("Failed to write adults into CSV file.");
+        }
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write adults");
     }
 
-    public void writeChild() throws IOException {
-        FileWriter csvWriter = new FileWriter("./resources/output/child.csv");
-        csvWriter.write("First name,Last name,Birth year,CNP,Tel number,Parent Name\n");
+    public void writeChild() {
         PatientService patientService = PatientService.getInstance();
-        ArrayList<Child> children = patientService.getChidren();
 
-        for (var child: children)
-            csvWriter.write(child.getFirstName() + "," + child.getLastName() + "," + child.getBirthYear()  + ","
-                    + child.getCNP() + "," + child.getTel() + "," + child.getParentName() + '\n');
-        csvWriter.close();
+        try {
+            FileWriter csvWriter = new FileWriter("./resources/output/child.csv");
+            csvWriter.write("First name,Last name,Birth year,CNP,Tel number,Parent Name\n");
+            ArrayList<Child> children = patientService.getChidren();
+
+            for (var child: children)
+                csvWriter.write(child.getFirstName() + "," + child.getLastName() + "," + child.getBirthYear()  + ","
+                        + child.getCNP() + "," + child.getTel() + "," + child.getParentName() + '\n');
+            csvWriter.close();
+        } catch (IOException err) {
+            System.out.println("Failed to write children into CSV file.");
+        }
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write children");
     }
 
-    public void writeAppointment() throws IOException {
-        FileWriter csvWriter = new FileWriter("./resources/output/appointment.csv");
-        csvWriter.write("Patient,Doctor,Time of appointment,Status\n");
+    public void writeAppointment() {
         AppointmentsService appService = AppointmentsService.getInstance();
-        ArrayList<Appointment> apps = appService.getAppointments();
 
-        String status;
-        for (var app: apps) {
-            status = app.isStatus() ? "attended" : "waiting";
-            csvWriter.write(app.getPatient().getLastName() + " " + app.getPatient().getFirstName() + "," +
-                    app.getDoctor().getLastName() + " " + app.getDoctor().getFirstName() + "," +
-                    app.getTimeOfAppointment() + "," + status + '\n');
+        try {
+            FileWriter csvWriter = new FileWriter("./resources/output/appointment.csv");
+            csvWriter.write("Patient,Doctor,Time of appointment,Status\n");
+            ArrayList<Appointment> apps = appService.getAppointments();
+
+            String status;
+            for (var app: apps) {
+                status = app.isStatus() ? "attended" : "waiting";
+                csvWriter.write(app.getPatient().getLastName() + " " + app.getPatient().getFirstName() + "," +
+                        app.getDoctor().getLastName() + " " + app.getDoctor().getFirstName() + "," +
+                        app.getTimeOfAppointment() + "," + status + '\n');
+            }
+            csvWriter.close();
+        } catch (IOException err) {
+            System.out.println("Failed to write appointments into CSV file.");
         }
-        csvWriter.close();
 
         AuditService audit = AuditService.getInstance();
         audit.print("CSV write appointments");
