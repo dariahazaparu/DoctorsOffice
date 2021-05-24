@@ -1,6 +1,6 @@
 package office.Office;
 
-public class Person {
+public abstract class Person {
     protected int ID;
     protected String lastName;
     protected String firstName;

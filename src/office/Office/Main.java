@@ -7,6 +7,7 @@ import office.Office.service.AppointmentsService;
 import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
+import office.database.config.SetupData;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -55,6 +56,9 @@ public class Main {
         read.readAdult();
         read.readChild();
         read.readAppointment();
+
+        SetupData setupData = new SetupData();
+        setupData.setup();
 
         Menu();
         int id;
