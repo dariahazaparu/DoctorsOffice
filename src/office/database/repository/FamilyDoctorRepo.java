@@ -55,58 +55,57 @@ public class FamilyDoctorRepo {
         }
     }
 
-    public Pediatrician find(int id){
+    public FamilyDoctor find(int id){
         try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
             String query = "SELECT * from family_doctors where id=" + id;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
-            Pediatrician ped = new Pediatrician("", "", "", 0, 0);
+            FamilyDoctor fam = new FamilyDoctor("", "", "", 0, 0);
             if (resultSet.next()){
                 int nid = resultSet.getInt(1);
-                ped.setID(nid);
+                fam.setID(nid);
                 String lastname = resultSet.getString(2);
-                ped.setLastName(lastname);
+                fam.setLastName(lastname);
                 String firstname = resultSet.getString(3);
-                ped.setFirstName(firstname);
+                fam.setFirstName(firstname);
                 String email = resultSet.getString(4);
-                ped.setEmail(email);
+                fam.setEmail(email);
                 int hire = resultSet.getInt(5);
-                ped.setHireYear(hire);
+                fam.setHireYear(hire);
                 int no_of_families = resultSet.getInt(6);
-                ped.setBonus(no_of_families);
+                fam.setNoOfFamilies(no_of_families);
             }
 
-            return ped;
+            return fam;
 
         } catch (SQLException exception) {
-            throw new RuntimeException("Something went wrong while tying to find pediatrician with id " + id);
+            throw new RuntimeException("Something went wrong while tying to find family doctor with id " + id);
         }
     }
 
-//    public boolean update(Nurse nurse) {
-//        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-//            String query = "{?= call update_nurse(?,?,?,?,?,?)}";
-//
-//            CallableStatement callableStatement = connection.prepareCall(query);
-//            System.out.println(nurse.getHours());
-//            callableStatement.setInt(1, nurse.getID());
-//            callableStatement.setString(2, nurse.getLastName());
-//            callableStatement.setString(3, nurse.getFirstName());
-//            callableStatement.setString(4, nurse.getEmail());
-//            callableStatement.setInt(5, nurse.getHireYear());
-//            callableStatement.setInt(6, nurse.getHours());
-//            callableStatement.registerOutParameter(1, Types.INTEGER);
-//
-//            callableStatement.executeUpdate();
-//            int response = callableStatement.getByte(1);
-//
-//            return response == 1;
-//
-//        } catch (SQLException exception) {
-//            throw new RuntimeException("Something went wrong while tying to updated the nurse with id: " + nurse);
-//        }
-//    }
+    public boolean update(FamilyDoctor fam) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            String query = "{?= call update_familydoctor(?,?,?,?,?,?)}";
+
+            CallableStatement callableStatement = connection.prepareCall(query);
+            callableStatement.setInt(2, fam.getID());
+            callableStatement.setString(3, fam.getLastName());
+            callableStatement.setString(4, fam.getFirstName());
+            callableStatement.setString(5, fam.getEmail());
+            callableStatement.setInt(6, fam.getHireYear());
+            callableStatement.setInt(7, fam.getNoOfFamilies());
+            callableStatement.registerOutParameter(1, Types.INTEGER);
+
+            callableStatement.executeUpdate();
+            int response = callableStatement.getByte(1);
+
+            return response == 1;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Something went wrong while tying to updated the nurse with id: " + fam);
+        }
+    }
 
     private FamilyDoctor mapToFam(ResultSet resultSet) throws SQLException {
         FamilyDoctor fam = new FamilyDoctor(resultSet.getString(2), resultSet.getString(3),

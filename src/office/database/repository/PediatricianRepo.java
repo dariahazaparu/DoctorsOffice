@@ -80,29 +80,28 @@ public class PediatricianRepo {
         }
     }
 
-//    public boolean update(Nurse nurse) {
-//        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-//            String query = "{?= call update_nurse(?,?,?,?,?,?)}";
-//
-//            CallableStatement callableStatement = connection.prepareCall(query);
-//            System.out.println(nurse.getHours());
-//            callableStatement.setInt(1, nurse.getID());
-//            callableStatement.setString(2, nurse.getLastName());
-//            callableStatement.setString(3, nurse.getFirstName());
-//            callableStatement.setString(4, nurse.getEmail());
-//            callableStatement.setInt(5, nurse.getHireYear());
-//            callableStatement.setInt(6, nurse.getHours());
-//            callableStatement.registerOutParameter(1, Types.INTEGER);
-//
-//            callableStatement.executeUpdate();
-//            int response = callableStatement.getByte(1);
-//
-//            return response == 1;
-//
-//        } catch (SQLException exception) {
-//            throw new RuntimeException("Something went wrong while tying to updated the nurse with id: " + nurse);
-//        }
-//    }
+    public boolean update(Pediatrician ped) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            String query = "{?= call update_pediatrician(?,?,?,?,?,?)}";
+
+            CallableStatement callableStatement = connection.prepareCall(query);
+            callableStatement.setInt(2, ped.getID());
+            callableStatement.setString(3, ped.getLastName());
+            callableStatement.setString(4, ped.getFirstName());
+            callableStatement.setString(5, ped.getEmail());
+            callableStatement.setInt(6, ped.getHireYear());
+            callableStatement.setInt(7, ped.getBonus());
+            callableStatement.registerOutParameter(1, Types.INTEGER);
+
+            callableStatement.executeUpdate();
+            int response = callableStatement.getByte(1);
+
+            return response == 1;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Something went wrong while tying to updated the pediatrician with id: " + ped);
+        }
+    }
 
     private Pediatrician mapToPeds(ResultSet resultSet) throws SQLException {
         Pediatrician ped = new Pediatrician(resultSet.getString(2), resultSet.getString(3),

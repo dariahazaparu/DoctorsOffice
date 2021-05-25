@@ -17,6 +17,8 @@ public class SetupData {
         createChildTable();
         createAppointmentTable();
         createUpdateNurse();
+        createUpdatePediatrician();
+        createUpdateFamilyDoctor();
     }
 
     private void createAppointmentTable() {
@@ -120,7 +122,7 @@ public class SetupData {
     }
 
     private void createNurseTable() {
-        String query = "CREATE TABLE IF NOT EXISTS nurses (\n" +
+        String query = "CREATE TABLE IF NOT EXISTS doctorsoffice.nurses (\n" +
                 "    id INT PRIMARY KEY AUTO_INCREMENT,\n" +
                 "    lastname VARCHAR(25),\n" +
                 "    firstname VARCHAR(25),\n" +
@@ -140,8 +142,10 @@ public class SetupData {
 
     private void createUpdateNurse() {
 
-        String query = "CREATE or replace FUNCTION doctorsoffice.update_nurse(req_id int, lastname varchar(25), firstname varchar(25), " +
+        String remove = "drop function if exists doctorsoffice.update_nurse\n";
+        String query = "CREATE FUNCTION doctorsoffice.update_nurse(req_id int, lastname varchar(25), firstname varchar(25), " +
                 "email varchar(50), hire int, hours int) RETURNS int(11)\n" +
+                "DETERMINISTIC\n" +
                 "BEGIN\n" +
                 "update doctorsoffice.nurses\n" +
                 "set lastname = lastname,\n" +
@@ -154,6 +158,7 @@ public class SetupData {
                 "END";
         try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
             Statement statement = connection.createStatement();
+            statement.execute(remove);
             statement.execute(query);
 
         } catch (SQLException e) {
@@ -161,5 +166,55 @@ public class SetupData {
         }
 
     }
+    private void createUpdatePediatrician() {
 
+        String remove = "drop function if exists doctorsoffice.update_pediatrician\n";
+        String query = "CREATE FUNCTION doctorsoffice.update_pediatrician(req_id int, lastname varchar(25), firstname varchar(25), " +
+                "email varchar(50), hire int, bonus int) RETURNS int(11)\n" +
+                "DETERMINISTIC\n" +
+                "BEGIN\n" +
+                "update doctorsoffice.pediatricians\n" +
+                "set lastname = lastname,\n" +
+                "firstname = firstname,\n" +
+                "email = email,\n" +
+                "hire_year = hire,\n" +
+                "bonus = bonus\n" +
+                "where id = req_id;\n" +
+                "RETURN row_count();\n" +
+                "END";
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            Statement statement = connection.createStatement();
+            statement.execute(remove);
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createUpdateFamilyDoctor() {
+
+        String remove = "drop function if exists doctorsoffice.update_familydoctor\n";
+        String query = "CREATE FUNCTION doctorsoffice.update_familydoctor(req_id int, lastname varchar(25), firstname varchar(25), " +
+                "email varchar(50), hire int, no_of_families int) RETURNS int(11)\n" +
+                "DETERMINISTIC\n" +
+                "BEGIN\n" +
+                "update doctorsoffice.family_doctors\n" +
+                "set lastname = lastname,\n" +
+                "firstname = firstname,\n" +
+                "email = email,\n" +
+                "hire_year = hire,\n" +
+                "no_of_families = no_of_families\n" +
+                "where id = req_id;\n" +
+                "RETURN row_count();\n" +
+                "END";
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            Statement statement = connection.createStatement();
+            statement.execute(remove);
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

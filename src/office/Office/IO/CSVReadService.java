@@ -6,6 +6,9 @@ import office.Office.service.AppointmentsService;
 import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
+import office.database.repository.FamilyDoctorRepo;
+import office.database.repository.NurseRepo;
+import office.database.repository.PediatricianRepo;
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
@@ -18,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class CSVReadService {
     public static CSVReadService serviceInstance = null;
@@ -38,10 +42,14 @@ public class CSVReadService {
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/nurse.csv"));
             String row;
+            NurseRepo nurseRepo = new NurseRepo();
+            ArrayList<Nurse> nurses = nurseRepo.findAll();
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 Nurse nurse = new Nurse(data[0], data[1], data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
-                doctorService.addNurse(nurse);
+                if (nurses.isEmpty()) {
+                    doctorService.addNurse(nurse);
+                }
                 doctorService.addDoctor(nurse);
             }
             csvReader.close();
@@ -58,11 +66,15 @@ public class CSVReadService {
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/pediatrician.csv"));
             String row;
+            PediatricianRepo pedsRepo = new PediatricianRepo();
+            ArrayList<Pediatrician> peds = pedsRepo.findAll();
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
-                Pediatrician peds = new Pediatrician(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
-                doctorService.addDoctor(peds);
-                doctorService.addPediatrician(peds);
+                Pediatrician ped = new Pediatrician(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+                doctorService.addDoctor(ped);
+                if (peds.isEmpty()) {
+                    doctorService.addPediatrician(ped);
+                }
             }
             csvReader.close();
         } catch (IOException err) {
@@ -79,11 +91,15 @@ public class CSVReadService {
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/familydoctor.csv"));
             String row;
+            FamilyDoctorRepo famRepo = new FamilyDoctorRepo();
+            ArrayList<FamilyDoctor> fams = famRepo.findAll();
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 FamilyDoctor fam = new FamilyDoctor(data[0], data[1], data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
                 doctorService.addDoctor(fam);
-                doctorService.addFamilyDoctor(fam);
+                if (fams.isEmpty()){
+                    doctorService.addFamilyDoctor(fam);
+                }
             }
             csvReader.close();
         } catch (IOException err) {

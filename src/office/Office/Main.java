@@ -50,6 +50,9 @@ public class Main {
 
         AuditService audit = AuditService.getInstance();
 
+        SetupData setupData = new SetupData();
+        setupData.setup();
+
         read.readNurse();
         read.readFamilyDoctor();
         read.readPediatrician();
@@ -57,27 +60,22 @@ public class Main {
         read.readChild();
         read.readAppointment();
 
-        SetupData setupData = new SetupData();
-        setupData.setup();
 
         Menu();
         int id;
         System.out.print("Command:");
         int opt = scanner.nextInt();
+        int altopt = 0;
         while (opt != 0) {
             switch (opt) {
                 case 1:
                     doctors.addDoctor();
                     break;
                 case 2:
-                    System.out.print("Doctor ID for editing:");
-                    id = scanner.nextInt();
-                    doctors.editDoctor(id);
+                    doctors.editDoctor();
                     break;
                 case 3:
-                    System.out.print("Doctor ID for deletion:");
-                    id = scanner.nextInt();
-                    doctors.deleteDoctor(id);
+                    doctors.deleteDoctor();
                     break;
                 case 4:
                     doctors.displayDoctors();

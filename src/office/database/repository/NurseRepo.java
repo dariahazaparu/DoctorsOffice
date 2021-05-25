@@ -73,6 +73,8 @@ public class NurseRepo {
                 nurse.setHireYear(hire);
                 int hours = resultSet.getInt(6);
                 nurse.setHours(hours);
+            } else {
+                return null;
             }
 
             return nurse;
@@ -87,13 +89,12 @@ public class NurseRepo {
             String query = "{?= call update_nurse(?,?,?,?,?,?)}";
 
             CallableStatement callableStatement = connection.prepareCall(query);
-            System.out.println(nurse.getHours());
-            callableStatement.setInt(1, nurse.getID());
-            callableStatement.setString(2, nurse.getLastName());
-            callableStatement.setString(3, nurse.getFirstName());
-            callableStatement.setString(4, nurse.getEmail());
-            callableStatement.setInt(5, nurse.getHireYear());
-            callableStatement.setInt(6, nurse.getHours());
+            callableStatement.setInt(2, nurse.getID());
+            callableStatement.setString(3, nurse.getLastName());
+            callableStatement.setString(4, nurse.getFirstName());
+            callableStatement.setString(5, nurse.getEmail());
+            callableStatement.setInt(6, nurse.getHireYear());
+            callableStatement.setInt(7, nurse.getHours());
             callableStatement.registerOutParameter(1, Types.INTEGER);
 
             callableStatement.executeUpdate();
