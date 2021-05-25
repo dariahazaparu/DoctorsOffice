@@ -1,50 +1,54 @@
 package office.database.repository;
 
 import office.database.config.DatabaseConfiguration;
+import office.doctor.FamilyDoctor;
 import office.doctor.Pediatrician;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class PediatricianRepo {
-    public Pediatrician insert(Pediatrician ped) {
+public class FamilyDoctorRepo {
 
-        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-            String query = "INSERT into pediatricians(lastname, firstname, email, hire_year, bonus) VALUES(?,?,?,?,?)";
+    public FamilyDoctor insert(FamilyDoctor fam) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, ped.getLastName());
-            preparedStatement.setString(2, ped.getFirstName());
-            preparedStatement.setString(3, ped.getEmail());
-            preparedStatement.setInt(4, ped.getHireYear());
-            preparedStatement.setInt(5, ped.getBonus());
+        try (
+        Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+        String query = "INSERT into family_doctors(lastname, firstname, email, hire_year, no_of_families) VALUES(?,?,?,?,?)";
 
-            preparedStatement.execute();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                ped.setID(resultSet.getInt(1));
-            }
-            resultSet.close();
-            return ped;
+        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, fam.getLastName());
+        preparedStatement.setString(2, fam.getFirstName());
+        preparedStatement.setString(3, fam.getEmail());
+        preparedStatement.setInt(4, fam.getHireYear());
+        preparedStatement.setInt(5, fam.getNoOfFamilies());
 
-        } catch (SQLException exception) {
-            throw new RuntimeException("Something went wrong while inserting: " + ped);
+        preparedStatement.execute();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        if (resultSet.next()) {
+            fam.setID(resultSet.getInt(1));
         }
-    }
+        resultSet.close();
+        return fam;
 
-    public ArrayList<Pediatrician> findAll() {
-        ArrayList<Pediatrician> peds = new ArrayList<>();
+    } catch (
+    SQLException exception) {
+        throw new RuntimeException("Something went wrong while inserting: " + fam);
+    }
+}
+
+    public ArrayList<FamilyDoctor> findAll() {
+        ArrayList<FamilyDoctor> fams = new ArrayList<>();
         try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-            String query = "SELECT * FROM pediatricians";
+            String query = "SELECT * FROM family_doctors";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                peds.add(mapToPeds(resultSet));
+                fams.add(mapToFam(resultSet));
             }
 
             resultSet.close();
-            return peds;
+            return fams;
 
         } catch (SQLException exception) {
             throw new RuntimeException("Something went wrong while tying to get all pediatricians. ");
@@ -53,7 +57,7 @@ public class PediatricianRepo {
 
     public Pediatrician find(int id){
         try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-            String query = "SELECT * from pediatricians where id=" + id;
+            String query = "SELECT * from family_doctors where id=" + id;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -69,8 +73,8 @@ public class PediatricianRepo {
                 ped.setEmail(email);
                 int hire = resultSet.getInt(5);
                 ped.setHireYear(hire);
-                int bonus = resultSet.getInt(6);
-                ped.setBonus(bonus);
+                int no_of_families = resultSet.getInt(6);
+                ped.setBonus(no_of_families);
             }
 
             return ped;
@@ -104,18 +108,18 @@ public class PediatricianRepo {
 //        }
 //    }
 
-    private Pediatrician mapToPeds(ResultSet resultSet) throws SQLException {
-        Pediatrician ped = new Pediatrician(resultSet.getString(2), resultSet.getString(3),
+    private FamilyDoctor mapToFam(ResultSet resultSet) throws SQLException {
+        FamilyDoctor fam = new FamilyDoctor(resultSet.getString(2), resultSet.getString(3),
                 resultSet.getString(4), resultSet.getInt(5),
                 resultSet.getInt(6));
-        ped.setID(resultSet.getInt(1));
-        return ped;
+        fam.setID(resultSet.getInt(1));
+        return fam;
     }
 
-    public Pediatrician delete(Pediatrician ped) {
+    public FamilyDoctor delete(FamilyDoctor ped) {
 
         try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-            String query = "DELETE from pediatricians WHERE id = (?)";
+            String query = "DELETE from family_doctors WHERE id = (?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, ped.getID());

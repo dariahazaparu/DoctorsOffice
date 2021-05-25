@@ -1,6 +1,9 @@
 package office.database.config;
 
+import office.doctor.*;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,6 +16,7 @@ public class SetupData {
         createAdultTable();
         createChildTable();
         createAppointmentTable();
+        createUpdateNurse();
     }
 
     private void createAppointmentTable() {
@@ -134,5 +138,28 @@ public class SetupData {
         }
     }
 
+    private void createUpdateNurse() {
+
+        String query = "CREATE or replace FUNCTION doctorsoffice.update_nurse(req_id int, lastname varchar(25), firstname varchar(25), " +
+                "email varchar(50), hire int, hours int) RETURNS int(11)\n" +
+                "BEGIN\n" +
+                "update doctorsoffice.nurses\n" +
+                "set lastname = lastname,\n" +
+                "firstname = firstname,\n" +
+                "email = email,\n" +
+                "hire_year = hire,\n" +
+                "hours = hours\n" +
+                "where id = req_id;\n" +
+                "RETURN row_count();\n" +
+                "END";
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

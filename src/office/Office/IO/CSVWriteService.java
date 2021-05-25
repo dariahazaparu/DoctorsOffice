@@ -112,7 +112,7 @@ public class CSVWriteService {
         try {
             FileWriter csvWriter = new FileWriter("./resources/output/child.csv");
             csvWriter.write("First name,Last name,Birth year,CNP,Tel number,Parent Name\n");
-            ArrayList<Child> children = patientService.getChidren();
+            ArrayList<Child> children = patientService.getChildren();
 
             for (var child: children)
                 csvWriter.write(child.getFirstName() + "," + child.getLastName() + "," + child.getBirthYear()  + ","

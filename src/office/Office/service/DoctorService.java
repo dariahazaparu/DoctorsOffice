@@ -1,11 +1,13 @@
 package office.Office.service;
 
+import office.database.repository.FamilyDoctorRepo;
+import office.database.repository.NurseRepo;
+import office.database.repository.PediatricianRepo;
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
 import office.doctor.Pediatrician;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
@@ -15,6 +17,9 @@ public class DoctorService {
     public static DoctorService serviceInstance = null;
 
     private ArrayList<Doctor> doctors = new ArrayList<>();
+    private NurseRepo nurseRepo = new NurseRepo();
+    private PediatricianRepo pedsRepo = new PediatricianRepo();
+    private FamilyDoctorRepo famRepo = new FamilyDoctorRepo();
 
     private DoctorService() {}
 
@@ -46,18 +51,21 @@ public class DoctorService {
         if (typeOfDoctor == 1) {
             System.out.print("\tHow many families does he/she has?");
             int nrFamilies = scanner.nextInt();
-            Doctor familyDoctor = new FamilyDoctor(lastname, firstname, email, hire, nrFamilies);
+            FamilyDoctor familyDoctor = new FamilyDoctor(lastname, firstname, email, hire, nrFamilies);
             doctors.add(familyDoctor);
+            addFamilyDoctor(familyDoctor);
         } else if (typeOfDoctor == 2) {
             System.out.print("\tHow many hours does he/she work in a week?");
             int nrHours = scanner.nextInt();
-            Doctor nurse = new Nurse(lastname, firstname, email, hire, nrHours);
+            Nurse nurse = new Nurse(lastname, firstname, email, hire, nrHours);
             doctors.add(nurse);
+            addNurse(nurse);
         } else if (typeOfDoctor == 3) {
             System.out.print("\tHow high is his/her bonus?");
             int bonus = scanner.nextInt();
-            Doctor peds = new Pediatrician(lastname, firstname, email, hire, bonus);
+            Pediatrician peds = new Pediatrician(lastname, firstname, email, hire, bonus);
             doctors.add(peds);
+            addPediatrician(peds);
         } else {
             System.out.println("Invalid type of doctor. Addition aborted.");
         }
@@ -70,6 +78,18 @@ public class DoctorService {
 
     public void addDoctor(Doctor doctor) {
         doctors.add(doctor);
+    }
+
+    public void addNurse(Nurse nurse) {
+        nurseRepo.insert(nurse);
+    }
+
+    public void addPediatrician(Pediatrician ped) {
+        pedsRepo.insert(ped);
+    }
+
+    public void addFamilyDoctor(FamilyDoctor fam) {
+        famRepo.insert(fam);
     }
 
     public FamilyDoctor randomFamilyDoctor() {
@@ -118,6 +138,15 @@ public class DoctorService {
             System.out.println("Invalid doctor ID.");
             return;
         }
+        if (doctor instanceof Nurse){
+            nurseRepo.delete((Nurse)doctor);
+        }
+        if (doctor instanceof Pediatrician) {
+            pedsRepo.delete((Pediatrician) doctor);
+        }
+        if (doctor instanceof FamilyDoctor){
+            famRepo.delete((FamilyDoctor) doctor);
+        }
         String name = doctor.getLastName() + " " + doctor.getFirstName();
         System.out.println("Doctor " + name + " successfully deleted.");
         doctors.remove(doctor);
@@ -159,42 +188,57 @@ public class DoctorService {
         System.out.println("2. First name");
         System.out.println("3. Email");
         System.out.println("4. Hire year");
-//        if (doctor.getClass().toString().equals("class office.doctor.FamilyDoctor")) {
-//            System.out.println("5. Number of families");
-//        } else if (doctor.getClass().toString().equals("class office.doctor.Nurse")) {
-//            System.out.println("5. Working hours per week");
-//        } else if (doctor.getClass().toString().equals("class office.doctor.Pediatrician")) {
-//            System.out.println("5. Salary bonus");
-//        }
-
+        if (doctor instanceof FamilyDoctor) {
+            System.out.println("5. Number of families");
+        } else if (doctor instanceof Nurse) {
+            System.out.println("5. Working hours per week");
+        } else if (doctor instanceof Pediatrician) {
+            System.out.println("5. Salary bonus");
+        }
+        String lastname = "";
+        String firstname = "";
+        String email = "";
+        int hire = 0;
         int opt = scanner.nextInt();
         if(opt == 1) {
             System.out.print("New last name: ");
-            String name = scanner.next();
-            doctor.setLastName(name);
+            lastname = scanner.next();
+            doctor.setLastName(lastname);
         } else if (opt == 2) {
             System.out.print("New first name: ");
-            String name = scanner.next();
-            doctor.setFirstName(name);
+            firstname = scanner.next();
+            doctor.setFirstName(firstname);
         } else if (opt == 3) {
             System.out.print("New email: ");
-            String email = scanner.next();
+            email = scanner.next();
             doctor.setEmail(email);
         } else if (opt == 4) {
             System.out.print("New hire year: ");
-            int hire = scanner.nextInt();
+            hire = scanner.nextInt();
             doctor.setHireYear(hire);
             System.out.println("New salary: " + doctor.computeSalary());
+        } else if (opt == 5) {
+            if (doctor instanceof FamilyDoctor) {
+                System.out.print("New no of families: ");
+                int nr = scanner.nextInt();
+                FamilyDoctor fam = new FamilyDoctor(lastname, firstname, email, hire, nr);
+
+            } else if (doctor instanceof Nurse) {
+                System.out.print("New hours: ");
+                int hours = scanner.nextInt();
+                Nurse nurse = nurseRepo.find(id);
+                nurse.setLastName(lastname);
+                nurse.setFirstName(firstname);
+                nurse.setEmail(email);
+                nurse.setHireYear(hire);
+                nurse.setHours(hours);
+                nurseRepo.update(nurse);
+            } else if (doctor instanceof Pediatrician) {
+            }
         } else {
             System.out.println("Invalid option. Abort editing.");
             return;
         }
-//        else if (opt == 5) {
-//            if (doctor.getClass().toString().equals("class office.doctor.FamilyDoctor")) {
-//            } else if (doctor.getClass().toString().equals("class office.doctor.Nurse")) {
-//            } else if (doctor.getClass().toString().equals("class office.doctor.Pediatrician")) {
-//            }
-//        }
         System.out.println("Successfully edited.");
 
         AuditService audit = AuditService.getInstance();

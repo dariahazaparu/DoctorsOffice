@@ -1,6 +1,8 @@
 package office.Office.service;
 
 import office.Office.Person;
+import office.database.repository.AdultRepo;
+import office.database.repository.ChildRepo;
 import office.patient.Adult;
 import office.patient.Child;
 import office.patient.Patient;
@@ -14,6 +16,8 @@ public class PatientService {
     public static PatientService serviceInstance = null;
 
     private ArrayList<Patient> patients = new ArrayList<>();
+    private AdultRepo adultRepo = new AdultRepo();
+    private ChildRepo childRepo = new ChildRepo();
 
     private PatientService() {}
 
@@ -49,18 +53,20 @@ public class PatientService {
                 return;
             }
             else {
-                Patient child = new Child(lastname, firstname, birth, cnp, parent.getTel(), parent.getLastName());
+                Child child = new Child(lastname, firstname, birth, cnp, parent.getTel(), parent.getLastName());
                 name = child.getLastName() + " " + child.getFirstName();
                 patients.add(child);
+                addChild(child);
             }
         } else {
             System.out.print("\tPhone number: ");
             String tel = scanner.next();
             System.out.print("\tDoes he/she have health insurance (0/1)?");
             byte hi = scanner.nextByte();
-            Patient adult = new Adult(lastname, firstname, birth, cnp, tel, hi == 1);
+            Adult adult = new Adult(lastname, firstname, birth, cnp, tel, hi == 1);
             name = adult.getLastName() + " " + adult.getFirstName();
             patients.add(adult);
+            addAdult(adult);
         }
 
         System.out.println("Patient " + name + " successfully registered.");
@@ -71,6 +77,14 @@ public class PatientService {
 
     public void addPatient(Patient patient){
         patients.add(patient);
+    }
+
+    public void addAdult(Adult adult) {
+        adultRepo.insert(adult);
+    }
+
+    public void addChild(Child child){
+        childRepo.insert(child);
     }
 
     private Patient searchParent(int id) {
@@ -95,6 +109,12 @@ public class PatientService {
         if (patient == null) {
             System.out.println("Invalid patient ID.");
             return;
+        }
+        if (patient instanceof Adult) {
+            adultRepo.delete((Adult) patient);
+        }
+        if(patient instanceof Child){
+            childRepo.delete((Child) patient);
         }
         String name = patient.getLastName() + " " + patient.getFirstName();
         System.out.println("Patient " + name + " successfully deleted.");
@@ -171,7 +191,7 @@ public class PatientService {
         return adults;
     }
 
-    public ArrayList<Child> getChidren() {
+    public ArrayList<Child> getChildren() {
         ArrayList<Child> children = new ArrayList<>();
 
         for (var i: patients)

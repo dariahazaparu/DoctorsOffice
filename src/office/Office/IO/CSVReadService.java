@@ -41,6 +41,7 @@ public class CSVReadService {
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 Nurse nurse = new Nurse(data[0], data[1], data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+                doctorService.addNurse(nurse);
                 doctorService.addDoctor(nurse);
             }
             csvReader.close();
@@ -61,6 +62,7 @@ public class CSVReadService {
                 String[] data = row.split(",");
                 Pediatrician peds = new Pediatrician(data[0], data[1], data[2],Integer.parseInt(data[3]), Integer.parseInt(data[4]));
                 doctorService.addDoctor(peds);
+                doctorService.addPediatrician(peds);
             }
             csvReader.close();
         } catch (IOException err) {
@@ -81,6 +83,7 @@ public class CSVReadService {
                 String[] data = row.split(",");
                 FamilyDoctor fam = new FamilyDoctor(data[0], data[1], data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]));
                 doctorService.addDoctor(fam);
+                doctorService.addFamilyDoctor(fam);
             }
             csvReader.close();
         } catch (IOException err) {
@@ -101,6 +104,7 @@ public class CSVReadService {
                 String[] data = row.split(",");
                 Adult adult = new Adult(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
                 patientService.addPatient(adult);
+                patientService.addAdult(adult);
             }
             csvReader.close();
         } catch (IOException err) {
@@ -121,6 +125,7 @@ public class CSVReadService {
                 String[] data = row.split(",");
                 Child child = new Child(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], data[5]);
                 patientService.addPatient(child);
+                patientService.addChild(child);
             }
             csvReader.close();
         } catch (IOException err) {

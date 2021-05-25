@@ -19,7 +19,7 @@ public class Child extends Patient {
 
     @Override
     public void displayPatient() {
-        System.out.println("\t" + lastName + " " + firstName + " -> Parent name: " + parentName);
+        System.out.println(ID+"\t" + lastName + " " + firstName + " -> Parent name: " + parentName);
     }
 
     public void show() {

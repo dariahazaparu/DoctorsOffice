@@ -9,3 +9,16 @@ sort doctors by hire year,7-MAY-2021 22:18:52
 display doctor,7-MAY-2021 22:18:52
 sort doctors by salary,7-MAY-2021 22:38:35
 display doctor,7-MAY-2021 22:38:35
+add doctor,25-MAY-2021 3:15:31
+display doctor,25-MAY-2021 4:35:19
+edit doctor,25-MAY-2021 4:35:39
+display doctor,25-MAY-2021 5:15:46
+edit doctor,25-MAY-2021 5:15:57
+display doctor,25-MAY-2021 5:16:2
+display doctor,25-MAY-2021 5:51:1
+fire doctor,25-MAY-2021 5:51:14
+display doctor,25-MAY-2021 6:2:43
+fire doctor,25-MAY-2021 6:3:20
+display doctor,25-MAY-2021 6:4:39
+add patient,25-MAY-2021 6:5:4
+fire doctor,25-MAY-2021 6:5:15

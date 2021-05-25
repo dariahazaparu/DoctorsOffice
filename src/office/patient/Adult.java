@@ -19,7 +19,7 @@ public class Adult extends Patient{
 
     @Override
     public void displayPatient() {
-        System.out.println("\t" + lastName + " " + firstName + " -> Insurance: " + healthInsurance);
+        System.out.println(ID + "\t" + lastName + " " + firstName + " -> Insurance: " + healthInsurance);
     }
 
     public void show() {
