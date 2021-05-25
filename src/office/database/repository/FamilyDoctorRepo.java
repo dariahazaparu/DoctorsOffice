@@ -75,12 +75,14 @@ public class FamilyDoctorRepo {
                 fam.setHireYear(hire);
                 int no_of_families = resultSet.getInt(6);
                 fam.setNoOfFamilies(no_of_families);
+            } else {
+                return null;
             }
 
             return fam;
 
         } catch (SQLException exception) {
-            throw new RuntimeException("Something went wrong while tying to find family doctor with id " + id);
+            throw new RuntimeException("Something went wrong while tying to find family doctor with id " + id + exception);
         }
     }
 

@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AdultRepo {
+
     public Adult insert(Adult adult) {
 
         try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
@@ -46,6 +47,7 @@ public class AdultRepo {
             }
 
             resultSet.close();
+
             return adults;
 
         } catch (SQLException exception) {
@@ -61,20 +63,22 @@ public class AdultRepo {
 
             Adult adult = new Adult("", "", 0, "", "", false);
             if (resultSet.next()){
-                int nid = resultSet.getInt(1);
+                int nid = resultSet.getInt("id");
                 adult.setID(nid);
-                String lastname = resultSet.getString(2);
+                String lastname = resultSet.getString("lastname");
                 adult.setLastName(lastname);
-                String firstname = resultSet.getString(3);
+                String firstname = resultSet.getString("firstname");
                 adult.setFirstName(firstname);
-                int birth = resultSet.getInt(5);
+                int birth = resultSet.getInt("birth_year");
                 adult.setBirthYear(birth);
-                String CNP = resultSet.getString(4);
+                String CNP = resultSet.getString("cnp");
                 adult.setCNP(CNP);
-                String tel = resultSet.getString(4);
+                String tel = resultSet.getString("tel");
                 adult.setTel(tel);
-                boolean hi = resultSet.getBoolean(6);
+                boolean hi = resultSet.getBoolean("health_insurance");
                 adult.setHealthInsurance(hi);
+            } else {
+                return null;
             }
 
             return adult;
@@ -84,35 +88,37 @@ public class AdultRepo {
         }
     }
 
-//    public boolean update(Nurse nurse) {
-//        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
-//            String query = "{?= call update_nurse(?,?,?,?,?,?)}";
-//
-//            CallableStatement callableStatement = connection.prepareCall(query);
-//            System.out.println(nurse.getHours());
-//            callableStatement.setInt(1, nurse.getID());
-//            callableStatement.setString(2, nurse.getLastName());
-//            callableStatement.setString(3, nurse.getFirstName());
-//            callableStatement.setString(4, nurse.getEmail());
-//            callableStatement.setInt(5, nurse.getHireYear());
-//            callableStatement.setInt(6, nurse.getHours());
-//            callableStatement.registerOutParameter(1, Types.INTEGER);
-//
-//            callableStatement.executeUpdate();
-//            int response = callableStatement.getByte(1);
-//
-//            return response == 1;
-//
-//        } catch (SQLException exception) {
-//            throw new RuntimeException("Something went wrong while tying to updated the nurse with id: " + nurse);
-//        }
-//    }
+    public boolean update(Adult adult) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            String query = "{?= call update_adult(?,?,?,?,?,?,?)}";
+
+            CallableStatement callableStatement = connection.prepareCall(query);
+            callableStatement.setInt(2, adult.getID());
+            callableStatement.setString(3, adult.getLastName());
+            callableStatement.setString(4, adult.getFirstName());
+            callableStatement.setInt(5, adult.getBirthYear());
+            callableStatement.setString(6, adult.getCNP());
+            callableStatement.setString(7, adult.getTel());
+            callableStatement.setBoolean(8, adult.isHealthInsurance());
+            callableStatement.registerOutParameter(1, Types.INTEGER);
+
+            callableStatement.executeUpdate();
+            int response = callableStatement.getByte(1);
+            return response == 1;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Something went wrong while tying to updated the adult with id: " + adult);
+        }
+    }
 
     private Adult mapToAdult(ResultSet resultSet) throws SQLException {
-        Adult adult = new Adult(resultSet.getString(2), resultSet.getString(3),
-                resultSet.getInt(4), resultSet.getString(5),
-                resultSet.getString(6), resultSet.getBoolean(7));
-        adult.setID(resultSet.getInt(1));
+        Adult adult = new Adult(resultSet.getString("lastname"),
+                resultSet.getString("firstname"),
+                resultSet.getInt("birth_year"),
+                resultSet.getString("cnp"),
+                resultSet.getString("tel"),
+                resultSet.getBoolean("health_insurance")
+                );
         return adult;
     }
 
@@ -129,6 +135,39 @@ public class AdultRepo {
 
         } catch (SQLException exception) {
             throw new RuntimeException("Something went wrong while deleting: " + adult);
+        }
+    }
+
+    public Adult findParent(String name) {
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            String query = "SELECT * from adults WHERE lastname ='" + name + "'";
+            Statement statement = connection.createStatement();
+            System.out.println("alo");
+            ResultSet resultSet = statement.executeQuery(query);
+            Adult adult = new Adult("", "", 0, "", "", false);
+            if (resultSet.next()){
+                int nid = resultSet.getInt(1);
+                adult.setID(nid);
+                String lastname = resultSet.getString(2);
+                adult.setLastName(lastname);
+                String firstname = resultSet.getString(3);
+                adult.setFirstName(firstname);
+                int birth = resultSet.getInt(5);
+                adult.setBirthYear(birth);
+                String CNP = resultSet.getString(4);
+                adult.setCNP(CNP);
+                String tel = resultSet.getString(4);
+                adult.setTel(tel);
+                boolean hi = resultSet.getBoolean(6);
+                adult.setHealthInsurance(hi);
+            } else {
+                return null;
+            }
+            resultSet.close();
+            return adult;
+
+        } catch (SQLException exception) {
+            throw new RuntimeException("Something went wrong while tying to find parent with name " + name);
         }
     }
 }

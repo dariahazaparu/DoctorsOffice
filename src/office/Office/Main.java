@@ -57,7 +57,7 @@ public class Main {
         read.readFamilyDoctor();
         read.readPediatrician();
         read.readAdult();
-        read.readChild();
+//        read.readChild();
         read.readAppointment();
 
 
@@ -84,14 +84,10 @@ public class Main {
                     patients.addPatient();
                     break;
                 case 6:
-                    System.out.print("Patient ID for editing:");
-                    id = scanner.nextInt();
-                    patients.editPatient(id);
+                    patients.editPatient();
                     break;
                 case 7:
-                    System.out.print("Patient ID for deletion:");
-                    id = scanner.nextInt();
-                    patients.deletePatient(id);
+                    patients.deletePatient();
                     break;
                 case 8:
                     patients.displayPatients();

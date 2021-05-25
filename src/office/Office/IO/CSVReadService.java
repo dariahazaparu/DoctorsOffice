@@ -6,9 +6,7 @@ import office.Office.service.AppointmentsService;
 import office.Office.service.AuditService;
 import office.Office.service.DoctorService;
 import office.Office.service.PatientService;
-import office.database.repository.FamilyDoctorRepo;
-import office.database.repository.NurseRepo;
-import office.database.repository.PediatricianRepo;
+import office.database.repository.*;
 import office.doctor.Doctor;
 import office.doctor.FamilyDoctor;
 import office.doctor.Nurse;
@@ -116,11 +114,15 @@ public class CSVReadService {
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/adult.csv"));
             String row;
+            AdultRepo adultRepo = new AdultRepo();
+            ArrayList<Adult> adults = adultRepo.findAll();
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 Adult adult = new Adult(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], Boolean.parseBoolean(data[5]));
                 patientService.addPatient(adult);
-                patientService.addAdult(adult);
+                if (adults.isEmpty()) {
+                    patientService.addAdult(adult);
+                }
             }
             csvReader.close();
         } catch (IOException err) {
@@ -137,11 +139,15 @@ public class CSVReadService {
         try{
             BufferedReader csvReader = new BufferedReader(new FileReader("./resources/input/child.csv"));
             String row;
+//            ChildRepo childRepo = new ChildRepo();
+//            ArrayList<Child> children = childRepo.findAll();
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
                 Child child = new Child(data[1], data[0], Integer.parseInt(data[2]), data[3], data[4], data[5]);
                 patientService.addPatient(child);
-                patientService.addChild(child);
+//                if (children.isEmpty()) {
+//                    patientService.addChild(child);
+//                }
             }
             csvReader.close();
         } catch (IOException err) {

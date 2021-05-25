@@ -3,14 +3,13 @@ package office.Office.service;
 import office.Office.Person;
 import office.database.repository.AdultRepo;
 import office.database.repository.ChildRepo;
+import office.doctor.Nurse;
 import office.patient.Adult;
 import office.patient.Child;
 import office.patient.Patient;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class PatientService {
     public static PatientService serviceInstance = null;
@@ -56,7 +55,7 @@ public class PatientService {
                 Child child = new Child(lastname, firstname, birth, cnp, parent.getTel(), parent.getLastName());
                 name = child.getLastName() + " " + child.getFirstName();
                 patients.add(child);
-                addChild(child);
+//                addChild(child);
             }
         } else {
             System.out.print("\tPhone number: ");
@@ -83,9 +82,9 @@ public class PatientService {
         adultRepo.insert(adult);
     }
 
-    public void addChild(Child child){
-        childRepo.insert(child);
-    }
+//    public void addChild(Child child){
+//        childRepo.insert(child);
+//    }
 
     private Patient searchParent(int id) {
         Patient sch = null;
@@ -103,83 +102,213 @@ public class PatientService {
         return found;
     }
 
-    public void deletePatient(int id) {
-
-        Patient patient = findPatient(id);
-        if (patient == null) {
-            System.out.println("Invalid patient ID.");
-            return;
-        }
-        if (patient instanceof Adult) {
-            adultRepo.delete((Adult) patient);
-        }
-        if(patient instanceof Child){
-            childRepo.delete((Child) patient);
-        }
-        String name = patient.getLastName() + " " + patient.getFirstName();
-        System.out.println("Patient " + name + " successfully deleted.");
-        patients.remove(patient);
-
-        AuditService audit = AuditService.getInstance();
-        audit.print("delete patient");
+    public Adult findAdult(int id) {
+        return adultRepo.find(id);
     }
 
-    public void editPatient(int id) {
-        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+//    public Child findChild(int id){
+//        return childRepo.find(id);
+//    }
 
-        Patient patient = findPatient(id);
-        if (patient == null) {
-            System.out.println("Invalid patient ID.");
+    public void deletePatient() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Do you want to delete an adult(1) or a child(2)?");
+        int altopt = scanner.nextInt();
+        int id;
+        if (altopt == 1) {
+            System.out.print("Adult ID for deletion:");
+            id = scanner.nextInt();
+            deleteAdult(id);
+        } else if (altopt == 2) {
+            System.out.print("Child ID for deletion:");
+            id = scanner.nextInt();
+//            deleteChild(id);
+        }
+    }
+
+    private void deleteAdult(int id) {
+        Adult adult = adultRepo.find(id);
+
+        if (adult == null) {
+            System.out.println("Invalid adult ID.");
             return;
         }
-        System.out.println("Old patient's data");
-        patient.show();
+        String name = adult.getLastName() + " " + adult.getFirstName();
+        System.out.println("Adult patient " + name + " successfully deleted.");
+        adultRepo.delete(adult);
+
+        AuditService audit = AuditService.getInstance();
+        audit.print("delete adult");
+    }
+
+//    private void deleteChild(int id) {
+//        Child child = childRepo.find(id);
+//
+//        if (child == null) {
+//            System.out.println("Invalid adult ID.");
+//            return;
+//        }
+//        String name = child.getLastName() + " " + child.getFirstName();
+//        System.out.println("Child patient " + name + " successfully deleted.");
+//        childRepo.delete(child);
+//
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("delete child");
+//    }
+
+    public void editPatient() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.println("Do you want to edit an adult(1) or a child(2)?");
+        int altopt = scanner.nextInt();
+        int id;
+        if (altopt == 1) {
+            System.out.print("Adult ID for editing:");
+            id = scanner.nextInt();
+            editAdult(id);
+        } else if (altopt == 2) {
+            System.out.print("Pediatrician ID for editing:");
+            id = scanner.nextInt();
+//            editChild(id);
+        }
+    }
+
+    private void editAdult(int id) {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
+        Adult adult = findAdult(id);
+
+
+        if (adult == null) {
+            System.out.println("Invalid adult ID.");
+            return;
+        }
+        System.out.println("Old adult's data");
+        adult.show();
 
         System.out.println("What do you want to edit?");
         System.out.println("1. Last name");
         System.out.println("2. First name");
         System.out.println("3. Birth year");
         System.out.println("4. CNP");
-        System.out.println("5. Phone number");
+        System.out.println("5. Telephone number");
+        System.out.println("6. Health insurance");
+
         int opt = scanner.nextInt();
         if(opt == 1) {
             System.out.print("New last name: ");
-            String name = scanner.next();
-            patient.setLastName(name);
-        } else if (opt == 2) {
+            String lastname = scanner.next();
+            adult.setLastName(lastname);
+        } else if(opt == 2) {
             System.out.print("New first name: ");
-            String name = scanner.next();
-            patient.setFirstName(name);
-        } else if (opt == 3) {
+            String firstname = scanner.next();
+            adult.setFirstName(firstname);
+        } else if(opt == 3) {
             System.out.print("New birth year: ");
             int birth = scanner.nextInt();
-            patient.setBirthYear(birth);
-        } else if (opt == 4) {
+            adult.setBirthYear(birth);
+        } else if(opt == 4) {
             System.out.print("New CNP: ");
             String cnp = scanner.next();
-            patient.setCNP(cnp);
-        }  else if (opt == 5) {
-            System.out.print("New phone number: ");
+            adult.setCNP(cnp);
+        } else if(opt == 5) {
+            System.out.print("New telephone number: ");
             String tel = scanner.next();
-            patient.setTel(tel);
+            adult.setTel(tel);
+        } else if(opt == 6) {
+            System.out.print("New health insurance (false/true): ");
+            boolean hi = scanner.nextBoolean();
+            adult.setHealthInsurance(hi);
         } else {
             System.out.println("Invalid option. Abort editing.");
             return;
         }
+
+        adultRepo.update(adult);
         System.out.println("Successfully edited.");
 
         AuditService audit = AuditService.getInstance();
-        audit.print("edit patient");
+        audit.print("edit adult");
+
     }
+
+//    private void editChild(int id) {
+//        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+//
+//        Child child = findChild(id);
+//        if (child == null) {
+//            System.out.println("Invalid child ID.");
+//            return;
+//        }
+//        System.out.println("Old child's data");
+//        child.show();
+//
+//        System.out.println("What do you want to edit?");
+//        System.out.println("1. Last name");
+//        System.out.println("2. First name");
+//        System.out.println("3. Birth year");
+//        System.out.println("4. CNP");
+//        System.out.println("5. Telephone number");
+//        System.out.println("6. Parent name");
+//
+//        int opt = scanner.nextInt();
+//        if(opt == 1) {
+//            System.out.print("New last name: ");
+//            String lastname = scanner.next();
+//            child.setLastName(lastname);
+//        } else if(opt == 2) {
+//            System.out.print("New first name: ");
+//            String firstname = scanner.next();
+//            child.setFirstName(firstname);
+//        } else if(opt == 3) {
+//            System.out.print("New birth year: ");
+//            int birth = scanner.nextInt();
+//            child.setBirthYear(birth);
+//        } else if(opt == 4) {
+//            System.out.print("New CNP: ");
+//            String cnp = scanner.next();
+//            child.setCNP(cnp);
+//        } else if(opt == 5) {
+//            System.out.print("New telephone number: ");
+//            String tel = scanner.next();
+//            child.setTel(tel);
+//        } else if(opt == 6) {
+//            System.out.print("New parent name: ");
+//            String parent = scanner.next();
+//            child.setParentName(parent);
+//        } else {
+//            System.out.println("Invalid option. Abort editing.");
+//            return;
+//        }
+//        childRepo.update(child);
+//        System.out.println("Successfully edited.");
+//
+//        AuditService audit = AuditService.getInstance();
+//        audit.print("edit child");
+//    }
 
     public void displayPatients () {
         System.out.println("These are the patients registered here:");
-        for (var i: patients)
-            i.displayPatient();
+        displayAdult();
+//        displayChild();
 
         AuditService audit = AuditService.getInstance();
         audit.print("display patients");
     }
+
+    private void displayAdult() {
+        ArrayList<Adult> adults = adultRepo.findAll();
+        for (var i: adults) {
+            i.displayPatient();
+        }
+    }
+
+//    private void displayChild() {
+//        ArrayList<Child> children = childRepo.findAll();
+//        for (var i: children) {
+//            i.displayPatient();
+//        }
+//    }
 
     public ArrayList<Adult> getAdults() {
         ArrayList<Adult> adults = new ArrayList<>();

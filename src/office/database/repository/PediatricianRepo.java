@@ -71,6 +71,8 @@ public class PediatricianRepo {
                 ped.setHireYear(hire);
                 int bonus = resultSet.getInt(6);
                 ped.setBonus(bonus);
+            } else {
+                return null;
             }
 
             return ped;

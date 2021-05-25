@@ -11,14 +11,20 @@ public class SetupData {
 
     public void setup(){
         createNurseTable();
-        createFamilyDoctorTable();
-        createPediatricianTable();
-        createAdultTable();
-        createChildTable();
-        createAppointmentTable();
         createUpdateNurse();
-        createUpdatePediatrician();
+
+        createFamilyDoctorTable();
         createUpdateFamilyDoctor();
+
+        createPediatricianTable();
+        createUpdatePediatrician();
+
+        createAdultTable();
+        createUpdateAdult();
+
+//        createChildTable();
+//        createUpdateChild();
+        createAppointmentTable();
     }
 
     private void createAppointmentTable() {
@@ -49,8 +55,8 @@ public class SetupData {
                 "    birth_year INT,\n" +
                 "    CNP VARCHAR(25),\n" +
                 "    tel VARCHAR(25),\n" +
-                "    parent_id INT,\n" +
-                "    FOREIGN KEY (parent_id) REFERENCES adults(id) ON DELETE CASCADE\n" +
+                "    parent_id INT\n" +
+//                "    FOREIGN KEY (parent_id) REFERENCES adults(id) ON DELETE CASCADE\n" +
                 ")";
         // la map o sa modific sa fie in clasa numele, dar altfel aici nu mergea
 
@@ -166,6 +172,7 @@ public class SetupData {
         }
 
     }
+
     private void createUpdatePediatrician() {
 
         String remove = "drop function if exists doctorsoffice.update_pediatrician\n";
@@ -217,4 +224,59 @@ public class SetupData {
             e.printStackTrace();
         }
     }
+
+    private void createUpdateAdult() {
+
+        String remove = "drop function if exists doctorsoffice.update_adult\n";
+        String query = "CREATE FUNCTION doctorsoffice.update_adult(req_id int, lastname varchar(25), firstname varchar(25), " +
+                "birth_year int, CNP varchar(25), tel varchar(25), health_insurance bit) RETURNS int(11)\n" +
+                "DETERMINISTIC\n" +
+                "BEGIN\n" +
+                "update doctorsoffice.adults\n" +
+                "set lastname = lastname,\n" +
+                "firstname = firstname,\n" +
+                "birth_year = birth_year,\n" +
+                "CNP = CNP,\n" +
+                "tel = tel,\n" +
+                "health_insurance = health_insurance\n" +
+                "where id = req_id;\n" +
+                "RETURN row_count();\n" +
+                "END";
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            Statement statement = connection.createStatement();
+            statement.execute(remove);
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createUpdateChild() {
+
+        String remove = "drop function if exists doctorsoffice.update_child\n";
+        String query = "CREATE FUNCTION doctorsoffice.update_child(req_id int, lastname varchar(25), firstname varchar(25), " +
+                "birth_year int, CNP varchar(25), tel varchar(25), parent_id int) RETURNS int(11)\n" +
+                "DETERMINISTIC\n" +
+                "BEGIN\n" +
+                "update doctorsoffice.adults\n" +
+                "set lastname = lastname,\n" +
+                "firstname = firstname,\n" +
+                "birth_year = birth_year,\n" +
+                "CNP = CNP,\n" +
+                "tel = tel,\n" +
+                "parent_id = parent_id\n" +
+                "where id = req_id;\n" +
+                "RETURN row_count();\n" +
+                "END";
+        try (Connection connection = DatabaseConfiguration.getDatabaseConnection()) {
+            Statement statement = connection.createStatement();
+            statement.execute(remove);
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
